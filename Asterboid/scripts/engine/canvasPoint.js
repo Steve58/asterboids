@@ -7,7 +7,7 @@ e58.canvasPoint = {};
 		
 		_camera = options.camera;
 		_canvas = options.canvas;
-		_instance.pointInCameraFrame = e58.point.getPointInFrame(options.universePoint, _camera.frame);
+		_instance.pointInCameraFrame = options.universePoint.getPointInFrame(_camera.frame);
 		
 		_instance.canvasX = _calculateCanvasCoordinate(
             s58.getOrientCoordX(_instance.pointInCameraFrame.x, _instance.pointInCameraFrame.y),

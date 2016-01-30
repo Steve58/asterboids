@@ -23,7 +23,7 @@ e58.plane = {};
 			var i;
 			var universePoints = [];
 			for (i = 0; i < _instance.points.length; i++) {
-				universePoints.push(e58.point.getUniversePoint(_instance.points[i], _instance.block.frame));
+				universePoints.push(_instance.points[i].getUniversePoint(_instance.block.frame));
 			}
 			return universePoints;
 		};

@@ -5,7 +5,7 @@ e58.collision = {};
     e58.collision.areBlocksInContact = function (blockA, blockB) {
         var i, j;
         
-        if (e58.point.getDistance(blockA.frame.origin, blockB.frame.origin) > blockA.rMax + blockB.rMax) {
+        if (blockA.frame.origin.getDistance(blockB.frame.origin) > blockA.rMax + blockB.rMax) {
             return false;
         }
         
@@ -52,7 +52,7 @@ e58.collision = {};
         var planeFrame = e58.frame.getNew(planePoints[0], 0, 0, 0);
         
         var inFrame = function (point) {
-            return e58.point.getPointInFrame(point, planeFrame, /* sign: */ 1);
+            return point.getPointInFrame(planeFrame, /* sign: */ 1);
         };
         
         // rotate for x axis along line from point 0 to point 1 in two steps
@@ -76,7 +76,7 @@ e58.collision = {};
         var pointsInFrame = [];
         plane.cachedUniversePoints.forEach(function (point, i) {
             pointsInFrame.push(
-                e58.point.getPointInFrame(point, plane.cachedPlaneFrame, /* sign: */ -1));
+                point.getPointInFrame(plane.cachedPlaneFrame, /* sign: */ -1));
         });
         return pointsInFrame;
     }
@@ -105,8 +105,8 @@ e58.collision = {};
 
     function getLineInfinitePlaneIntersect(linePoints, plane) {        
         var linePointsInFrame = [
-            e58.point.getPointInFrame(linePoints[0], plane.cachedPlaneFrame, /* sign: */ -1),
-            e58.point.getPointInFrame(linePoints[1], plane.cachedPlaneFrame, /* sign: */ -1)];
+            linePoints[0].getPointInFrame(plane.cachedPlaneFrame, /* sign: */ -1),
+            linePoints[1].getPointInFrame(plane.cachedPlaneFrame, /* sign: */ -1)];
         
         if (linePointsInFrame[0].z * linePointsInFrame[1].z >= 0
                 || linePointsInFrame[1].z - linePointsInFrame[0].z == 0) {

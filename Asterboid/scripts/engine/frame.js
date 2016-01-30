@@ -3,9 +3,9 @@ e58.frame = {};
 
 (function () {
     function _rotateAxes(frame, angle, axis) {
-        frame.xAxis = e58.point.getRotated(frame.xAxis, angle, axis);
-        frame.yAxis = e58.point.getRotated(frame.yAxis, angle, axis);
-        frame.zAxis = e58.point.getRotated(frame.zAxis, angle, axis);
+        frame.xAxis = frame.xAxis.getRotated(angle, axis);
+        frame.yAxis = frame.yAxis.getRotated(angle, axis);
+        frame.zAxis = frame.zAxis.getRotated(angle, axis);
     }
     
 	function _createFrame (options) {
@@ -19,8 +19,8 @@ e58.frame = {};
 		_instance.phiXyAxis = null;
 		
 		_rotateAxes(_instance, options.theta1 || 0, e58.point.getUnitZ());
-		_rotateAxes(_instance, options.phiY || 0, e58.point.clone(_instance.yAxis));
-		_rotateAxes(_instance, options.theta2 || 0, e58.point.clone(_instance.zAxis));
+		_rotateAxes(_instance, options.phiY || 0, _instance.yAxis.clone());
+		_rotateAxes(_instance, options.theta2 || 0, _instance.zAxis.clone());
         
 		e58.frame.calculateRotations(_instance);
 		return _instance;
@@ -73,13 +73,13 @@ e58.frame = {};
             frame.phiXyAxis = e58.point.getUnitX();
         }
         else {
-            frame.phiXyAxis =  e58.point.getUnitVector(e58.point.getNewXYZ(-frame.zAxis.y, frame.zAxis.x, 0));
+            frame.phiXyAxis =  e58.point.getNewXYZ(-frame.zAxis.y, frame.zAxis.x, 0).getUnitVector();
         }
         frame.phiXY = Math.atan2(
             Math.sqrt(frame.zAxis.x * frame.zAxis.x + frame.zAxis.y * frame.zAxis.y),
             frame.zAxis.z);
 
-        var reversePhiXYRotatedXAxis = e58.point.getUnitVector(e58.point.getRotated(frame.xAxis, -frame.phiXY, frame.phiXyAxis));
+        var reversePhiXYRotatedXAxis = frame.xAxis.getRotated(-frame.phiXY, frame.phiXyAxis).getUnitVector();
         
         // rotate reverse phi xy rotated universe x axis onto universe x
         frame.thetaZ = Math.atan2(reversePhiXYRotatedXAxis.y, reversePhiXYRotatedXAxis.x);
@@ -89,25 +89,24 @@ e58.frame = {};
        
     e58.frame.clone = function (frame) {
         var cloneFrame = e58.frame.getNew(frame.origin, 0, 0, 0);
-        cloneFrame.xAxis = e58.point.clone(frame.xAxis);
-        cloneFrame.yAxis = e58.point.clone(frame.yAxis);
-        cloneFrame.zAxis = e58.point.clone(frame.zAxis);
+        cloneFrame.xAxis = frame.xAxis.clone();
+        cloneFrame.yAxis = frame.yAxis.clone();
+        cloneFrame.zAxis = frame.zAxis.clone();
         cloneFrame.phiXY = frame.phiXY;
 		cloneFrame.thetaZ = frame.thetaZ;
-		cloneFrame.phiXyAxis = e58.point.clone(frame.phiXyAxis);
+		cloneFrame.phiXyAxis = frame.phiXyAxis.clone();
         return cloneFrame;
     };
     
     e58.frame.translateInOwnFrame = function (frame, x, y, z, sign) {
-        frame.origin = e58.point.getTranslated(
-            frame.origin,
-            e58.point.getRotatedInToFrame(e58.point.getXYZSafe([x, y, z]), frame, 1),
+        frame.origin = frame.origin.getTranslated(
+            e58.point.getXYZSafe([x, y, z]).getRotatedInToFrame(frame, 1),
             sign);
         return frame;
     };
     
     e58.frame.translateInUniverse = function (frame, x, y, z, sign) {
-        frame.origin = e58.point.getTranslated(frame.origin, [x, y, z], sign);
+        frame.origin = frame.origin.getTranslated([x, y, z], sign);
         return frame;
     };
     
@@ -136,7 +135,7 @@ e58.frame = {};
         var measuringFrame = e58.frame.getNew();
         e58.frame.rotateInOwnFrameY(measuringFrame, -compassDeg);
         e58.frame.rotateInOwnFrameX(measuringFrame, -zFlatDeg);
-        var xAxisInMeasuringFrame = e58.point.getRotatedInToFrame(frame.xAxis, measuringFrame, -1);
+        var xAxisInMeasuringFrame = frame.xAxis.getRotatedInToFrame(measuringFrame, -1);
         var rollDeg = -s58.utils.radToDeg(s58.utils.radPiToPi(Math.atan2(xAxisInMeasuringFrame.y, xAxisInMeasuringFrame.x)));
         
         

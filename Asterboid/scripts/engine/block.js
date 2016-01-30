@@ -26,11 +26,11 @@ e58.block = {};
         }
         
 		_instance.getVelocityInUniverse = function () {
-			return e58.point.getRotatedInToFrame(_instance.velocityInOwnFrame, _instance.frame, 1);
+			return _instance.velocityInOwnFrame.getRotatedInToFrame(_instance.frame, 1);
 		};
 		
 		_instance.setVelocityInUniverse = function (velocityInUniverse) {
-			_instance.velocityInOwnFrame = e58.point.getRotatedInToFrame(velocityInUniverse, _instance.frame, -1);
+			_instance.velocityInOwnFrame = velocityInUniverse.getRotatedInToFrame(_instance.frame, -1);
 		};
 		
 		_instance.addPlane = function (name, lineColour, fillColour, points, detailLevel) {
@@ -51,12 +51,12 @@ e58.block = {};
 		_instance.getCanvasPlanes = function (camera, canvas) {
 			var i;
             if (!_instance.alwaysDraw) {
-                if (e58.point.getDistance(_instance.frame.origin, camera.frame.origin)
+                if (_instance.frame.origin.getDistance(camera.frame.origin)
                             + _instance.rMax > e58.vars.drawDistance) {
                     // console.log("block beyond draw distance");
                     return [];
                 }
-                var originInCameraFrame = e58.point.getPointInFrame(_instance.frame.origin, camera.frame);
+                var originInCameraFrame = _instance.frame.origin.getPointInFrame(camera.frame);
                 if (originInCameraFrame.z > _instance.rMax) {
                     // console.log("block behind camera");
                     return [];
