@@ -2,8 +2,10 @@
 e58.buffer = {};
 
 (function () {
-	function _createBuffer (options) {
-		var _instance = { className: "e58.buffer" };
+	function _Buffer (options) {
+		var _instance = this;
+        _instance.className = "e58.buffer";
+        
         _instance.defaultValueAccessor = "value";
 		_instance.limit = options.limit;
         _instance.constant = options.constant;
@@ -54,15 +56,13 @@ e58.buffer = {};
         _instance.reset = function() {
             _instance.values = {};
         };
-        
-		return _instance;
 	}
 	
 	e58.buffer.getNew = function (
 		limit,
         constant,
         initialValues) {
-		return _createBuffer({
+		return new _Buffer({
             limit: limit,
             constant: constant,
             initialValues: initialValues

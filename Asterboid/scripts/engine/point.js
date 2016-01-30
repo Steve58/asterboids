@@ -3,24 +3,25 @@ e58.point = {};
 
 (function () {
 	function _Point (options) {
-		this.className = "e58.point";
+        var _instance = this;
+		_instance.className = "e58.point";
 		
-		this.x = options.x;
-		this.y = options.y;
-		this.z = options.z;
-		this.r = options.r;
-		this.theta = options.theta;
-		this.phi = options.phi;
+		_instance.x = options.x;
+		_instance.y = options.y;
+		_instance.z = options.z;
+		_instance.r = options.r;
+		_instance.theta = options.theta;
+		_instance.phi = options.phi;
 				
 		if (options.cartesian) {
-			this.r = Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
-			this.theta = Math.atan2(this.y, this.x);
-			this.phi = Math.atan2(Math.sqrt(this.x * this.x + this.y * this.y), this.z);
+			_instance.r = Math.sqrt(_instance.x * _instance.x + _instance.y * _instance.y + _instance.z * _instance.z);
+			_instance.theta = Math.atan2(_instance.y, _instance.x);
+			_instance.phi = Math.atan2(Math.sqrt(_instance.x * _instance.x + _instance.y * _instance.y), _instance.z);
 		}
 		else if (options.polar) {
-			this.x = this.r * Math.cos(this.theta) * Math.sin(this.phi);
-			this.y = this.r * Math.sin(this.theta) * Math.sin(this.phi);;
-			this.z = this.r * Math.cos(this.phi);
+			_instance.x = _instance.r * Math.cos(_instance.theta) * Math.sin(_instance.phi);
+			_instance.y = _instance.r * Math.sin(_instance.theta) * Math.sin(_instance.phi);;
+			_instance.z = _instance.r * Math.cos(_instance.phi);
 		}
 	}
 	

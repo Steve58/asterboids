@@ -83,7 +83,7 @@ e58.block = {};
 				_instance.velocityInOwnFrame.x * control.msSinceLastLogic,
 				_instance.velocityInOwnFrame.y * control.msSinceLastLogic,
 				_instance.velocityInOwnFrame.z * control.msSinceLastLogic);
-			e58.frame.translateInOwnFrame(_instance.frame, translation.x, translation.y, translation.z, 1);
+			_instance.frame.translateInOwnFrame(translation.x, translation.y, translation.z, 1);
 		};
                 
 		return _instance;

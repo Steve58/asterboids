@@ -684,10 +684,10 @@ e58.control = {};
         }
         
         var deviceFrame = e58.frame.getNew([0, 0, 0], 0, 0, 0);
-        e58.frame.rotateInUniverseX(deviceFrame, beta);
-        e58.frame.rotateInUniverseY(deviceFrame, gamma);
-        e58.frame.rotateInUniverseZ(deviceFrame, s58.utils.radToDeg(s58.utils.radPiToPi(Math.atan2(deviceFrame.xAxis.y, deviceFrame.xAxis.x))));
-        e58.frame.rotateInUniverseY(deviceFrame, s58.utils.radToDeg(s58.utils.radPiToPi(Math.atan2(deviceFrame.xAxis.z, deviceFrame.xAxis.x))));
+        deviceFrame.rotateInUniverseX(beta);
+        deviceFrame.rotateInUniverseY(gamma);
+        deviceFrame.rotateInUniverseZ(s58.utils.radToDeg(s58.utils.radPiToPi(Math.atan2(deviceFrame.xAxis.y, deviceFrame.xAxis.x))));
+        deviceFrame.rotateInUniverseY(s58.utils.radToDeg(s58.utils.radPiToPi(Math.atan2(deviceFrame.xAxis.z, deviceFrame.xAxis.x))));
         
         return s58.utils.radToDeg(s58.utils.radPiToPi(Math.atan2(deviceFrame.yAxis.z, deviceFrame.yAxis.y))) - 90;
     }
@@ -709,10 +709,10 @@ e58.control = {};
             gamma = 180 - gamma;
         }
                     
-        e58.frame.rotateInUniverseX(deviceFrame, beta);
-        e58.frame.rotateInUniverseY(deviceFrame, gamma);        
-        e58.frame.rotateInUniverseY(deviceFrame, s58.utils.radToDeg(s58.utils.radPiToPi(Math.atan2(deviceFrame.yAxis.x, deviceFrame.yAxis.y))));
-        e58.frame.rotateInUniverseX(deviceFrame, s58.utils.radToDeg(s58.utils.radPiToPi(Math.atan2(deviceFrame.yAxis.y, deviceFrame.yAxis.x))));
+        deviceFrame.rotateInUniverseX(beta);
+        deviceFrame.rotateInUniverseY(gamma);        
+        deviceFrame.rotateInUniverseY(s58.utils.radToDeg(s58.utils.radPiToPi(Math.atan2(deviceFrame.yAxis.x, deviceFrame.yAxis.y))));
+        deviceFrame.rotateInUniverseX(s58.utils.radToDeg(s58.utils.radPiToPi(Math.atan2(deviceFrame.yAxis.y, deviceFrame.yAxis.x))));
                 
         return -180 + (flip ? -1 : 1) * s58.utils.radToDeg(Math.atan2(deviceFrame.xAxis.x, deviceFrame.xAxis.y));
     }

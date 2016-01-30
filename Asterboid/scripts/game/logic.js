@@ -8,9 +8,9 @@ g58.logic.updateLogic = function (controlParams) {
     g58.g.cameraBlock.velocityInOwnFrame.z -= 0.002 * controlParams.msSinceLastLogic;
     
     g58.g.bricks.forEach(function (cube) {
-        e58.frame.rotateInOwnFrameX(cube.frame, cube.randomSpins.x * g58.vars.cubeSpinSpeed * controlParams.msSinceLastLogic);
-        e58.frame.rotateInOwnFrameY(cube.frame, cube.randomSpins.y * g58.vars.cubeSpinSpeed * controlParams.msSinceLastLogic);
-        e58.frame.rotateInOwnFrameZ(cube.frame, cube.randomSpins.z * g58.vars.cubeSpinSpeed * controlParams.msSinceLastLogic);
+        cube.frame.rotateInOwnFrameX(cube.randomSpins.x * g58.vars.cubeSpinSpeed * controlParams.msSinceLastLogic);
+        cube.frame.rotateInOwnFrameY(cube.randomSpins.y * g58.vars.cubeSpinSpeed * controlParams.msSinceLastLogic);
+        cube.frame.rotateInOwnFrameZ(cube.randomSpins.z * g58.vars.cubeSpinSpeed * controlParams.msSinceLastLogic);
     });
     
     if (g58.g.cameraBlock.frame.origin.z < g58.g.bricks[g58.g.bricks.length - 1].frame.origin.z - 10000) {

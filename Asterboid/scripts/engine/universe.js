@@ -38,7 +38,7 @@ e58.universe = {};
 				}
 			}			
 			for (i = 0; i < canvasPlanes.length; i++) {
-				e58.canvasPlane.render(canvasPlanes[i]);
+				canvasPlanes[i].render();
 			}
 		}
 		
@@ -46,7 +46,7 @@ e58.universe = {};
 			canvas.clear();
 			_renderPlanes(camera, canvas);
             if (e58.vars.shading.enable) {
-                canvas.renderShade(e58.frame.getUprightAngles(camera.frame));
+                canvas.renderShade(camera.frame.getUprightAngles());
             }
 		};
         		

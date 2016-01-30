@@ -73,36 +73,25 @@ g58.control.handleControls = function (controlParams) {
     // s58.utils.pageConsoleWrite(
         // touchParts.top + ", " + touchParts.bottom + "<br/>" + touchParts.left + ", " + touchParts.right + "<br/>"
         // + touchParts.topLeft + ", " + touchParts.topRight + "<br/>" + touchParts.bottomLeft + ", " + touchParts.bottomRight);
-    
-    // if (controlParams.move.x || controlParams.move.y) {
-        // e58.frame.rotateInUniverseX(g58.g.camera.frame, controlParams.move.y * g58.vars.webcam.rotateSpeed);
-        // e58.frame.rotateInUniverseY(g58.g.camera.frame, controlParams.move.x * g58.vars.webcam.rotateSpeed);
-    // }
-    
-    
+        
     
     
     
     
     if (controlParams.keys.isDown("w")) {
-        e58.frame.translateInOwnFrame(g58.g.cameraBlock.frame, 0, +g58.vars.webcam.moveSpeed * controlParams.msSinceLastLogic, 0);
+        g58.g.cameraBlock.frame.translateInOwnFrame(0, +g58.vars.webcam.moveSpeed * controlParams.msSinceLastLogic, 0);
     }    
     if (controlParams.keys.isDown("s")) {
-        e58.frame.translateInOwnFrame(g58.g.cameraBlock.frame, 0, -g58.vars.webcam.moveSpeed * controlParams.msSinceLastLogic, 0);
+        g58.g.cameraBlock.frame.translateInOwnFrame(0, -g58.vars.webcam.moveSpeed * controlParams.msSinceLastLogic, 0);
     }
     if (controlParams.keys.isDown("a")) {
-        e58.frame.translateInOwnFrame(g58.g.cameraBlock.frame, -g58.vars.webcam.moveSpeed * controlParams.msSinceLastLogic, 0, 0);
+        g58.g.cameraBlock.frame.translateInOwnFrame(-g58.vars.webcam.moveSpeed * controlParams.msSinceLastLogic, 0, 0);
     }    
     if (controlParams.keys.isDown("d")) {
-        e58.frame.translateInOwnFrame(g58.g.cameraBlock.frame, +g58.vars.webcam.moveSpeed * controlParams.msSinceLastLogic, 0, 0);
+        g58.g.cameraBlock.frame.translateInOwnFrame(+g58.vars.webcam.moveSpeed * controlParams.msSinceLastLogic, 0, 0);
     }
     
-    
-    // if (controlParams.move.x || controlParams.move.y) {
-        // e58.frame.rotateInOwnFrameX(g58.g.ship.frame, +controlParams.move.y * g58.vars.ship.rotateSpeed * controlParams.msSinceLastLogic);
-        // e58.frame.rotateInOwnFrameY(g58.g.ship.frame, -controlParams.move.x * g58.vars.ship.rotateSpeed * controlParams.msSinceLastLogic);
-    // }
-    
+        
     var viewWebcamMaximum, aimWebcamMaximum;
     if (g58.vars.options.cameraSplitMode == "fullView" && e58.webcam.maxima.full) {
         viewWebcamMaximum = e58.webcam.maxima.full;        

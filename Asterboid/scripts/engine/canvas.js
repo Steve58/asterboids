@@ -2,11 +2,10 @@
 e58.canvas = {};
 
 (function () {
-	function _createCanvas(options) {
-		var _instance = { className: "e58.canvas" };
-        
-		// _instance.bufferElement = document.createElement("canvas");
-        
+	function _Canvas(options) {
+		var _instance = this;
+        _instance.className = "e58.canvas";
+                
 		_instance.htmlElement = document.getElementById(options.htmlId);
 		_instance.htmlElement.requestPointerLock =
 			_instance.htmlElement.requestPointerLock ||
@@ -24,22 +23,13 @@ e58.canvas = {};
 			_instance.htmlElement.setAttribute("height", _instance.height);
 			_instance.htmlElement.width = _instance.width;
 			_instance.htmlElement.height = _instance.height;
-            // _instance.bufferElement.height = _instance.height;
-            // _instance.bufferElement.width = _instance.width;
             if (s58.vars.autoOrient) {
                 s58.vars.orient = (_instance.width >= _instance.height) ? 0 : 90;
             }
 		};
 		
-        _instance.renderFromBuffer = function () {
-            // var bufferContext = _instance.bufferElement.getContext("2d");
-            // var bufferImageData = bufferContext.getImageData(0, 0, _instance.width, _instance.height);
-            // var displayContext = _instance.htmlElement.getContext("2d");
-            // displayContext.putImageData(bufferImageData, 0, 0);
-        };
-        
 		_instance.getContext = function (strokeStyle, fillStyle, lineWidth) {
-			var context = _instance.htmlElement.getContext("2d"); // var context = _instance.bufferElement.getContext("2d");
+			var context = _instance.htmlElement.getContext("2d");
 			context.lineWidth = lineWidth || (e58.vars.integerPixels ? 1 : 0.5);
             context.strokeStyle = strokeStyle || _instance.clearColour;
 			context.fillStyle = fillStyle || _instance.clearColour;
@@ -290,11 +280,10 @@ e58.canvas = {};
         };
         
 		_instance.updateDimensions();
-		return _instance;
 	}
 
 	e58.canvas.getNew = function (htmlId, clearColour) {
-		return _createCanvas({
+		return new _Canvas({
 			htmlId: htmlId,
 			clearColour: clearColour
 		});

@@ -2,13 +2,13 @@
 e58.canvasPlane = {};
 
 (function () {
-	function _createCanvasPlane (options) {
-		var _instance = {
-            className: "e58.canvasPlane",
-            plane: options.plane,
-            camera: options.camera,
-            canvas: options.canvas
-        };		
+	function _CanvasPlane (options) {
+        var _instance = this;
+		_instance.className = "e58.canvasPlane";
+        
+        _instance.plane = options.plane;
+        _instance.camera = options.camera;
+        _instance.canvas = options.canvas
 				
 		_instance.canvasPoints = (function () {
 			var i, j;
@@ -75,40 +75,38 @@ e58.canvasPlane = {};
 			}
 			return e58.point.getNewXYZ(sum.x / n, sum.y / n, sum.z / n).r;
 		})();
-				
-		return _instance;
 	}
 	
 	e58.canvasPlane.getNew = function (
 		plane,
 		camera,
 		canvas) {
-		return _createCanvasPlane({
+		return new _CanvasPlane({
 			plane: plane,
 			camera: camera,
 			canvas: canvas
 		});
 	};
     
-    e58.canvasPlane.render = function (canvasPlane) {
+    _CanvasPlane.prototype.render = function () {
         var i;
-        if (!canvasPlane.canvasPoints.length) {
+        if (!this.canvasPoints.length) {
             return;
         }
         
-        var context = canvasPlane.canvas.getContext(canvasPlane.plane.lineColour, canvasPlane.plane.fillColour);
+        var context = this.canvas.getContext(this.plane.lineColour, this.plane.fillColour);
         context.beginPath();
         
         context.moveTo(
-            e58.px(canvasPlane.canvasPoints[0].canvasX),
-            e58.px(canvasPlane.canvasPoints[0].canvasY));
-        // console.log(canvasPlane.canvasPoints[0]);
+            e58.px(this.canvasPoints[0].canvasX),
+            e58.px(this.canvasPoints[0].canvasY));
+        // console.log(this.canvasPoints[0]);
         
-        for (i = 1; i < canvasPlane.canvasPoints.length; i++) {
+        for (i = 1; i < this.canvasPoints.length; i++) {
             context.lineTo(
-                e58.px(canvasPlane.canvasPoints[i].canvasX),
-                e58.px(canvasPlane.canvasPoints[i].canvasY));
-            // console.log(canvasPlane.canvasPoints[i]);
+                e58.px(this.canvasPoints[i].canvasX),
+                e58.px(this.canvasPoints[i].canvasY));
+            // console.log(this.canvasPoints[i]);
         }
         context.closePath();
         context.stroke();
