@@ -2,8 +2,10 @@
 e58.plane = {};
 
 (function () {
-	function _createPlane (options) {
-		var _instance = { className: "e58.plane" };
+	function _Plane (options) {
+		var _instance = this;
+        _instance.className = "e58.plane";
+        
 		_instance.block = options.block;
         _instance.name = options.name;
 		_instance.lineColour = options.lineColour;
@@ -18,26 +20,8 @@ e58.plane = {};
 			}
 			return points;
 		})();
-		
-		_instance.getUniversePoints = function () {
-			var i;
-			var universePoints = [];
-			for (i = 0; i < _instance.points.length; i++) {
-				universePoints.push(_instance.points[i].getUniversePoint(_instance.block.frame));
-			}
-			return universePoints;
-		};
-		
-		_instance.getCanvasPlane = function (camera, canvas) {
-			return e58.canvasPlane.getNew(
-				_instance,
-				camera,
-				canvas);
-		};
-		
-		return _instance;
 	}
-	
+    
 	e58.plane.getNew = function (
 		block,
         name,
@@ -45,7 +29,7 @@ e58.plane = {};
 		fillColour,
 		points,
         detailLevel) {
-		return _createPlane({
+		return new _Plane({
 			block: block,
             name: name,
 			lineColour: lineColour,
@@ -54,4 +38,18 @@ e58.plane = {};
             detailLevel: detailLevel
 		});
 	};
+
+    _Plane.prototype.getUniversePoints = function () {
+        var i;
+        var universePoints = [];
+        for (i = 0; i < this.points.length; i++) {
+            universePoints.push(this.points[i].getUniversePoint(this.block.frame));
+        }
+        return universePoints;
+    };
+    
+    _Plane.prototype.getCanvasPlane = function (camera, canvas) {
+        return e58.canvasPlane.getNew(this, camera, canvas);
+    };
+    
 })();

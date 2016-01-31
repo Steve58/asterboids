@@ -25,7 +25,7 @@ e58.control = {};
         },
         recordMsSince: function (msCountName, utcMs) {
             if (e58.vars.control.logEnabled && (utcMs || utcMs == 0)) {
-                control.log.record(msCountName, (new Date()).valueOf() - utcMs);
+                control.log.record(msCountName, new Date().valueOf() - utcMs);
             }
         },
         write: function () {
@@ -168,14 +168,14 @@ e58.control = {};
     var _logicUpdateFunction, _renderFunction;
     
     function _pollIfDue() {
-        var nowUtcMs = (new Date()).valueOf();
+        var nowUtcMs = new Date().valueOf();
         if (nowUtcMs - _lastPollUtcMs >= e58.vars.control.pollIntervalMs) {
             _poll(nowUtcMs);
         }        
     }
     
     function _poll(nowUtcMs) {        
-        nowUtcMs = nowUtcMs || (new Date()).valueOf();
+        nowUtcMs = nowUtcMs || new Date().valueOf();
         control.log.record("pollInterval", nowUtcMs - _lastPollUtcMs);
         _lastPollUtcMs = nowUtcMs;
         
@@ -187,7 +187,7 @@ e58.control = {};
         }
         
         if (e58.webcam.running) {
-            nowUtcMs = (new Date()).valueOf();
+            nowUtcMs = new Date().valueOf();
             var msSinceLastWebcam = nowUtcMs - _lastWebcamUtcMs;
             if (msSinceLastWebcam >= e58.vars.control.webcamIntervalMs) {
                 _runWebcamFunction(nowUtcMs, msSinceLastWebcam);
@@ -196,7 +196,7 @@ e58.control = {};
             }
         }
         
-        nowUtcMs = (new Date()).valueOf();
+        nowUtcMs = new Date().valueOf();
         var msSinceLastRender = nowUtcMs - _lastRenderUtcMs;
         if (msSinceLastRender >= e58.vars.control.renderIntervalMs) {
             _runRenderFunction(nowUtcMs, msSinceLastRender);
@@ -204,7 +204,7 @@ e58.control = {};
             control.log.recordMsSince("renderDuration", nowUtcMs);
         }
         
-        nowUtcMs = (new Date()).valueOf();
+        nowUtcMs = new Date().valueOf();
         var msSinceLastPlaySounds = nowUtcMs - _lastPlaySoundsUtcMs;
         if (msSinceLastPlaySounds >= e58.vars.control.playSoundsIntervalMs) {
             _playSounds(nowUtcMs);
@@ -343,7 +343,7 @@ e58.control = {};
         
         _mouseMove.x = _mouseMove.y = _touchMove.x = _touchMove.y = 0;
         
-        var nowUtcMs = (new Date()).valueOf();
+        var nowUtcMs = new Date().valueOf();
         _lastPollUtcMs = nowUtcMs;
         _lastWebcamUtcMs = nowUtcMs;
         _lastMotionUtcMs = nowUtcMs;
@@ -552,7 +552,7 @@ e58.control = {};
     }
     
     function _motionHandler(event) {        
-        var motionMs = (new Date()).valueOf();
+        var motionMs = new Date().valueOf();
         var msSinceLastMotion = motionMs - _lastMotionUtcMs;
         _lastMotionUtcMs = motionMs;
         
