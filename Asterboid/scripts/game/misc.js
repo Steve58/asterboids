@@ -11,17 +11,17 @@ g58.misc.setBrickWave = function (waveSettings) {
         return i * (waveSettings.z || 20000);
     }
         
-    (g58.g.bricks || []).forEach(function () {
-        g58.g.universe.blocks.pop();
+    (g58.game.bricks || []).forEach(function () {
+        g58.game.universe.blocks.pop();
     });
-    g58.g.bricks = [];
+    g58.game.bricks = [];
     
     var W = 1500;
     var H = 1000;
     var D = 20000;
     var Z = 50000;
     for (i = 0; i < waveSettings.length; i++) {
-        g58.g.bricks.push(g58.misc.addCube(
+        g58.game.bricks.push(g58.misc.addCube(
             waveSettings.getX(i),
             waveSettings.getY(i),
             -1000000 - (waveSettings.getZ || defaultGetZ)(i),
@@ -30,7 +30,7 @@ g58.misc.setBrickWave = function (waveSettings) {
             waveSettings.D,
             waveSettings.lineColour || s58.rgba(50, 50, 50),
             waveSettings.fillColour || s58.rgba(100, 100, 150)));
-        g58.g.bricks[g58.g.bricks.length - 1].randomSpins = {
+        g58.game.bricks[g58.game.bricks.length - 1].randomSpins = {
             x: waveSettings.getRotX ? waveSettings.getRotX(i) : 0,
             y: waveSettings.getRotY ? waveSettings.getRotY(i) : 0,
             z: waveSettings.getRotZ ? waveSettings.getRotZ(i) : 0
@@ -55,7 +55,7 @@ g58.misc.addCube = function (x, y, z, L, W, D, lineColour, planeColour, backColo
     var FL = L * ySkew;
     var FW = W * xSkew;
     
-    var cube = g58.g.universe.addBlock([x, y, z], 0, 0, 0);
+    var cube = g58.game.universe.addBlock([x, y, z], 0, 0, 0);
     function addPlane(points, lineCol, planeCol, name) {
         cube.addPlane(
             name || "",

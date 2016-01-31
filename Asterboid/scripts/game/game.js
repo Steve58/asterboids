@@ -1,6 +1,6 @@
 ﻿window.g58 = window.g58 || {};
 
-g58.game = g58.g = {};
+g58.game = {};
 
 window.addEventListener("load", function() {
     var i, propName;
