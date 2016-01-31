@@ -1,4 +1,10 @@
-﻿window.e58 = window.e58 || {};
+﻿// Universe
+// Wraps a collection of blocks and cameras
+
+"use strict";
+
+window.e58 = window.e58 || {};
+
 e58.universe = {};
 
 (function () {
@@ -21,18 +27,18 @@ e58.universe = {};
         this.blocks.push(block);
         return block;
     };
-    
+
     _Universe.prototype.addCamera = function (origin, theta1Deg, phiYDeg, theta2Deg, zoom) {
         var camera = e58.camera.getNew(origin, theta1Deg, phiYDeg, theta2Deg, zoom);
         this.cameras.push(camera);
         return camera;
     };
-    
+
     _Universe.prototype.render = function (camera, canvas) {
         var i, j, swapPlane;
-        
+
         canvas.clear();
-        
+
         var canvasPlanes = [];
         for (i = 0; i < this.blocks.length; i++) {
             canvasPlanes = canvasPlanes.concat(this.blocks[i].getCanvasPlanes(camera, canvas));
@@ -49,12 +55,12 @@ e58.universe = {};
         for (i = 0; i < canvasPlanes.length; i++) {
             canvasPlanes[i].render();
         }
-        
+
         if (e58.vars.shading.enable) {
             canvas.renderShade(camera.frame.getUprightAngles());
         }
     };
-            
+
     _Universe.prototype.updateLogic = function (control) {
         var i;
         for (i = 0; i < this.blocks.length; i++) {

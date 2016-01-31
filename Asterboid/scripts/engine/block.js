@@ -1,4 +1,8 @@
-﻿window.e58 = window.e58 || {};
+﻿// Block: a Frame and a set of Planes
+"use strict"
+
+window.e58 = window.e58 || {};
+
 e58.block = {};
 
 (function () {	
@@ -16,7 +20,7 @@ e58.block = {};
         _instance.zMax = 0;
         _instance.rMax = 0;
 	}
-    
+
 	e58.block.getNew = function (
 		universe,
 		frame,
@@ -36,31 +40,35 @@ e58.block = {};
             }
         }
         return null;
-    }
-    
+    };
+
     _Block.prototype.getVelocityInUniverse = function () {
         return this.velocityInOwnFrame.getRotatedInToFrame(this.frame, 1);
     };
-    
+
     _Block.prototype.setVelocityInUniverse = function (velocityInUniverse) {
         this.velocityInOwnFrame = velocityInUniverse.getRotatedInToFrame(this.frame, -1);
     };
-    
+
     _Block.prototype.addPlane = function (name, lineColour, fillColour, points, detailLevel) {
         var i, j;
         var plane = e58.plane.getNew(this, name, lineColour, fillColour, points, detailLevel);
         this.planes.push(plane);
         for (i = 0; i < this.planes.length; i++) {
             for (j = 0; j < this.planes[i].points.length; j++) {
-                (this.xMax >= Math.abs(this.planes[i].points[j].x)) || (this.xMax = Math.abs(this.planes[i].points[j].x));
-                (this.yMax >= Math.abs(this.planes[i].points[j].y)) || (this.yMax = Math.abs(this.planes[i].points[j].y));
-                (this.zMax >= Math.abs(this.planes[i].points[j].z)) || (this.zMax = Math.abs(this.planes[i].points[j].z));
-                (this.rMax >= this.planes[i].points[j].r) || (this.rMax = this.planes[i].points[j].r);
+                (this.xMax >= Math.abs(this.planes[i].points[j].x))
+                        || (this.xMax = Math.abs(this.planes[i].points[j].x));
+                (this.yMax >= Math.abs(this.planes[i].points[j].y))
+                        || (this.yMax = Math.abs(this.planes[i].points[j].y));
+                (this.zMax >= Math.abs(this.planes[i].points[j].z))
+                        || (this.zMax = Math.abs(this.planes[i].points[j].z));
+                (this.rMax >= this.planes[i].points[j].r)
+                        || (this.rMax = this.planes[i].points[j].r);
             }
         }
         return plane;
     };
-                    
+
     _Block.prototype.getCanvasPlanes = function (camera, canvas) {
         var i;
         if (!this.alwaysDraw) {
@@ -81,7 +89,7 @@ e58.block = {};
                 // return [];
             }
         }
-        
+
         var canvasPlanes = [];
         for (i = 0; i < this.planes.length; i++) {
             if (this.detailLevel >= this.planes[i].detailLevel) {
@@ -90,7 +98,7 @@ e58.block = {};
         }
         return canvasPlanes;
     };
-    
+
     _Block.prototype.updateLogic = function (control) {
         var translation = e58.point.getNewXYZ(
             this.velocityInOwnFrame.x * control.msSinceLastLogic,

@@ -1,4 +1,10 @@
-﻿window.e58 = window.e58 || {};
+﻿// Point
+// Defines a point in 3D space in a Frame
+
+"use strict";
+
+window.e58 = window.e58 || {};
+
 e58.point = {};
 
 (function () {
@@ -43,12 +49,12 @@ e58.point = {};
 		return _getNewSafe(arrayFunction, defaultPoint, e58.point.getOrigin());
 	};
 	
-	// Returns a point; either the instance passed in, or a new instance if an array of three coords is passed.
+	// Returns a point - either the instance passed in, or a new instance if an array of three coords is passed
 	e58.point.getXYZSafe = function (pointParam, defaultPoint) {
 		return _getNewSafe(e58.point.getNewXYZ, pointParam, defaultPoint);
 	};
 	
-	// Returns a point; either the instance passed in, or a new instance if an array of three coords is passed.	
+	// Returns a point - either the instance passed in, or a new instance if an array of three coords is passed
 	e58.point.getPolarSafe = function (pointParam, defaultPoint) {
 		return _getNewSafe(e58.point.getNewPolar, pointParam, defaultPoint);
 	};
@@ -57,14 +63,14 @@ e58.point = {};
 	e58.point.getUnitX = function () { return e58.point.getNewXYZ(1, 0, 0); };
 	e58.point.getUnitY = function () { return e58.point.getNewXYZ(0, 1, 0); };
 	e58.point.getUnitZ = function () { return e58.point.getNewXYZ(0, 0, 1); };
-    
+
     _Point.prototype.getUnitVector = function () {
         if (!this.r) {
             return e58.point.getUnitZ();
         }
         return e58.point.getNewPolar(1, this.theta, this.phi);
     };
-        
+
     _Point.prototype.getRotatedInToFrame = function (frame, sign) {
         sign = (sign && sign > 0) ? 1 : -1;
         var rotatedPoint = this;
@@ -77,7 +83,7 @@ e58.point = {};
         }
         return rotatedPoint;
     }
-    
+
     _Point.prototype.getPointInFrame = function (frame, sign) {
         sign = (sign && sign > 0) ? 1 : -1;
         var pointInFrame = this;
@@ -99,7 +105,7 @@ e58.point = {};
         var cosA = Math.cos(angle);
         var sinA = Math.sin(angle);
         var oneMinusCosA = 1 - cosA;
-        
+
         var rotatedX = (cosA + axUX * axUX * oneMinusCosA) * this.x
             + (axUX * axUY * oneMinusCosA - axUZ * sinA) * this.y
             + (axUX * axUZ * oneMinusCosA + axUY * sinA) * this.z;
@@ -109,16 +115,16 @@ e58.point = {};
         var rotatedZ = (axUZ * axUX * oneMinusCosA - axUY * sinA) * this.x
             + (axUZ * axUY * oneMinusCosA + axUX * sinA) * this.y
             + (cosA + axUZ * axUZ * oneMinusCosA) * this.z;
-        
+
         return e58.point.getNewXYZ(rotatedX, rotatedY, rotatedZ);
     };
-        
+
     _Point.prototype.getDistance = function (toPoint) {
         return Math.sqrt(((this.x - toPoint.x) * (this.x - toPoint.x))
             + ((this.y - toPoint.y) * (this.y - toPoint.y))
             + ((this.z - toPoint.z) * (this.z - toPoint.z)));
     };
-    
+
     _Point.prototype.getTranslated = function (translationPoint, sign) {
         translationPoint = e58.point.getXYZSafe(translationPoint);
         sign = (sign && sign < 0) ? -1 : 1;
@@ -128,11 +134,11 @@ e58.point = {};
             this.z + translationPoint.z * sign
         );
     };
-    
+
     _Point.prototype.getUniversePoint = function (frame) {
         return this.getPointInFrame(frame, 1);
     };
-    
+
     _Point.prototype.clone = function () {
         return e58.point.getNewXYZ(this.x, this.y, this.z);
     };

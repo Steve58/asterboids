@@ -1,14 +1,19 @@
-﻿window.e58 = window.e58 || {};
+﻿// vars
+// Settings
+
+"use strict";
+
+window.e58 = window.e58 || {};
 
 e58.vars = {
     minBrowserWidthPx: 200,
-    
+
     integerPixels: true,
-    
+
     fontWeight: "normal",
     fontSizePx: 30,
     fontFamily: "Verdana, Geneva, sans-serif",
-    
+
     pixelToCoordScale: 10,
     cameraScreenDistance: 200,
     drawDistance: 1000000,
@@ -18,7 +23,7 @@ e58.vars = {
     standardWidthZoomRatio: 1000,
     requestPointerLockDelayMs: 2000,
     soundLoopCheckMs: 1000,
-    
+
     control: {
         logEnabled: false,
         toggleMs: 500,
@@ -30,22 +35,22 @@ e58.vars = {
         playSoundsIntervalMs: 100,
         derivedOrientationAbsoluteBuffer: { limit: 0, constant: 1 },
         derivedOrientationRelativeBuffer: { limit: 0, constant: 1 },
-        rollOrientationLimits : { low: 20, high: 40, difference: 10 }
+        rollOrientationLimits: { low: 20, high: 40, difference: 10 }
     },
-    
+
     shading: {
         enable: false,
         halfShade: 0.35,
         transparency: 0.25
     },
-    
+
     sound: {
         enable: true
     },
-    
+
     webcam: {
         width: 200,
-        runningPollMs: 100,
+        pollWhetherRunningMs: 100,
         maximaResolution: 20,
         maxima: 2,
         sectors: {
@@ -55,7 +60,7 @@ e58.vars = {
             topRight: false,
             bottomLeft: false,
             bottomCentre: false,
-            bottomRight: false,
+            bottomRight: false
         },
         gap: 0.3 // full vertical gap as proportion of height
     }

@@ -1,11 +1,17 @@
-﻿window.e58 = window.e58 || {};
+﻿// Plane
+// A flat polygon in 3D space, belonging to a Block
+
+"use strict";
+
+window.e58 = window.e58 || {};
+
 e58.plane = {};
 
 (function () {
 	function _Plane (options) {
 		var _instance = this;
         _instance.className = "e58.plane";
-        
+
 		_instance.block = options.block;
         _instance.name = options.name;
 		_instance.lineColour = options.lineColour;
@@ -21,7 +27,7 @@ e58.plane = {};
 			return points;
 		})();
 	}
-    
+
 	e58.plane.getNew = function (
 		block,
         name,
@@ -47,9 +53,8 @@ e58.plane = {};
         }
         return universePoints;
     };
-    
+
     _Plane.prototype.getCanvasPlane = function (camera, canvas) {
         return e58.canvasPlane.getNew(this, camera, canvas);
     };
-    
 })();
