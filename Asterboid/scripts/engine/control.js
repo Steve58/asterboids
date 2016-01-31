@@ -46,7 +46,7 @@ window.addEventListener("load", function() {
                 headersText += "\t" + countName;
             }
             var dataText = "";
-            for (i = 0; i < s58.utils.max(msCountLengths); i++) {
+            for (i = 0; i < s58.max(msCountLengths); i++) {
                 dataText += "\n" + i;
                 for (countName in control.log.msCounts) {
                     dataText +=
@@ -227,16 +227,16 @@ window.addEventListener("load", function() {
         _totalElapsedMs += msSinceLastLogic;
         _msSinceLastResumed += msSinceLastLogic;
 
-        // s58.utils.pageConsoleWrite("" +
+        // s58.pageConsoleWrite("" +
             // "orientation: " +
-            // "<br/>" + s58.utils.floor(_orientation.alpha, 2) +
-            // "<br/>" + s58.utils.floor(_orientation.beta, 2) +
-            // "<br/>" + s58.utils.floor(_orientation.gamma, 2) +
+            // "<br/>" + s58.floor(_orientation.alpha, 2) +
+            // "<br/>" + s58.floor(_orientation.beta, 2) +
+            // "<br/>" + s58.floor(_orientation.gamma, 2) +
             // "<br/>" +
             // "rotation: " +
-            // "<br/>" + s58.utils.floor(_rotation.alpha, 2) +
-            // "<br/>" + s58.utils.floor(_rotation.beta, 2) +
-            // "<br/>" + s58.utils.floor(_rotation.gamma, 2) +
+            // "<br/>" + s58.floor(_rotation.alpha, 2) +
+            // "<br/>" + s58.floor(_rotation.beta, 2) +
+            // "<br/>" + s58.floor(_rotation.gamma, 2) +
             // "");
 
         if (_derivedOrientation.active || (_orientation.active && _rotation.active)) {
@@ -468,11 +468,11 @@ window.addEventListener("load", function() {
         // _currentTouches.forEach(function(touch, i) {
             // touchesLog += "[" + touch.identifier + "], (" + touch.pageX + ", " + touch.pageY + ")" + "<br/>";
         // });
-        // s58.utils.pageConsoleWrite("" +
+        // s58.pageConsoleWrite("" +
             // "touch start: " +
             // "<br/>" + touchesLog +
             // "");
-        // s58.utils.pageConsoleWrite("touch start, current touches count: " + _currentTouches.length);
+        // s58.pageConsoleWrite("touch start, current touches count: " + _currentTouches.length);
     }
 
     function _touchEndHandler(event) {
@@ -496,12 +496,12 @@ window.addEventListener("load", function() {
         // _currentTouches.forEach(function(touch, i) {
             // touchesLog += "[" + touch.identifier + "], (" + touch.pageX + ", " + touch.pageY + ")" + "<br/>";
         // });
-        // s58.utils.pageConsoleWrite("" +
+        // s58.pageConsoleWrite("" +
             // "touch end: " +
             // "<br/>" + touchesLog +
             // "<br/>" + eventTouchesLog +
             // "");
-        // s58.utils.pageConsoleWrite("touch end, current touches count: " + _currentTouches.length);
+        // s58.pageConsoleWrite("touch end, current touches count: " + _currentTouches.length);
     }
 
     function _touchCancelHandler(event) {
@@ -512,7 +512,7 @@ window.addEventListener("load", function() {
                 _currentTouches[currentTouchIndex].endedAtTotalElapsedMs = _totalElapsedMs;
             }
         });
-        // s58.utils.pageConsoleWrite("touch cancel, current touches count: " + _currentTouches.length);
+        // s58.pageConsoleWrite("touch cancel, current touches count: " + _currentTouches.length);
     }
 
     function _touchLeaveHandler(event) {
@@ -523,7 +523,7 @@ window.addEventListener("load", function() {
                 _currentTouches[currentTouchIndex].endedAtTotalElapsedMs = _totalElapsedMs;
             }
         });
-        // s58.utils.pageConsoleWrite("touch leave, current touches count: " + _currentTouches.length);
+        // s58.pageConsoleWrite("touch leave, current touches count: " + _currentTouches.length);
     }
 
     function _touchMoveHandler(event) {
@@ -539,7 +539,7 @@ window.addEventListener("load", function() {
             _touchMove.y += s58.getOrientCoordY(changeY, changeX);
             _currentTouches[currentTouchIndex] = changedTouch;
         });
-        // s58.utils.pageConsoleWrite("touch move, current touches count: " + _currentTouches.length);
+        // s58.pageConsoleWrite("touch move, current touches count: " + _currentTouches.length);
     }
 
     function _doForEachChangedTouch(event, doFunction) {
@@ -571,9 +571,9 @@ window.addEventListener("load", function() {
         var deltaGamma = event.rotationRate.gamma * msSinceLastMotion * 0.001;
 
         if (s58.isChrome) {
-            deltaAlpha = s58.utils.radToDeg(deltaAlpha);
-            deltaBeta = s58.utils.radToDeg(deltaBeta);
-            deltaGamma = s58.utils.radToDeg(deltaGamma);
+            deltaAlpha = s58.radToDeg(deltaAlpha);
+            deltaBeta = s58.radToDeg(deltaBeta);
+            deltaGamma = s58.radToDeg(deltaGamma);
         }
 
         _rotation.alpha += deltaAlpha;
@@ -625,7 +625,7 @@ window.addEventListener("load", function() {
         if (s58.isChrome) {
             if (Math.abs(norm.beta) > 45 && Math.abs(norm.beta) <= 135) {
                 if (Math.abs(norm.gamma) > 45) {
-                    norm.gamma = s58.utils.getSign(norm.gamma) * 90 - norm.gamma;
+                    norm.gamma = s58.getSign(norm.gamma) * 90 - norm.gamma;
                 }
                 else {
                     norm.gamma = -norm.gamma;
@@ -637,16 +637,16 @@ window.addEventListener("load", function() {
             }
         }
 
-        // s58.utils.pageConsoleWrite("" +
+        // s58.pageConsoleWrite("" +
             // "orientation: " +
-            // "<br/>" + s58.utils.floor(orientationEvent.alpha, 2) +
-            // "<br/>" + s58.utils.floor(orientationEvent.beta, 2) +
-            // "<br/>" + s58.utils.floor(orientationEvent.gamma, 2) +
+            // "<br/>" + s58.floor(orientationEvent.alpha, 2) +
+            // "<br/>" + s58.floor(orientationEvent.beta, 2) +
+            // "<br/>" + s58.floor(orientationEvent.gamma, 2) +
             // "<br/>" +
             // "normalised orientation: " +
-            // "<br/>" + s58.utils.floor(normalisedOrientationEvent.alpha, 2) +
-            // "<br/>" + s58.utils.floor(normalisedOrientationEvent.beta, 2) +
-            // "<br/>" + s58.utils.floor(normalisedOrientationEvent.gamma, 2) +
+            // "<br/>" + s58.floor(normalisedOrientationEvent.alpha, 2) +
+            // "<br/>" + s58.floor(normalisedOrientationEvent.beta, 2) +
+            // "<br/>" + s58.floor(normalisedOrientationEvent.gamma, 2) +
             // "");
 
         return normalisedOrientationEvent;
@@ -694,10 +694,10 @@ window.addEventListener("load", function() {
         var deviceFrame = e58.frame.getNew([0, 0, 0], 0, 0, 0);
         deviceFrame.rotateInUniverseX(beta);
         deviceFrame.rotateInUniverseY(gamma);
-        deviceFrame.rotateInUniverseZ(s58.utils.radToDeg(s58.utils.radPiToPi(Math.atan2(deviceFrame.xAxis.y, deviceFrame.xAxis.x))));
-        deviceFrame.rotateInUniverseY(s58.utils.radToDeg(s58.utils.radPiToPi(Math.atan2(deviceFrame.xAxis.z, deviceFrame.xAxis.x))));
+        deviceFrame.rotateInUniverseZ(s58.radToDeg(s58.radPiToPi(Math.atan2(deviceFrame.xAxis.y, deviceFrame.xAxis.x))));
+        deviceFrame.rotateInUniverseY(s58.radToDeg(s58.radPiToPi(Math.atan2(deviceFrame.xAxis.z, deviceFrame.xAxis.x))));
 
-        return s58.utils.radToDeg(s58.utils.radPiToPi(Math.atan2(deviceFrame.yAxis.z, deviceFrame.yAxis.y))) - 90;
+        return s58.radToDeg(s58.radPiToPi(Math.atan2(deviceFrame.yAxis.z, deviceFrame.yAxis.y))) - 90;
     }
 
     function _getHorizontalOrientationPitchRaw(beta, gamma) {
@@ -719,10 +719,10 @@ window.addEventListener("load", function() {
 
         deviceFrame.rotateInUniverseX(beta);
         deviceFrame.rotateInUniverseY(gamma);
-        deviceFrame.rotateInUniverseY(s58.utils.radToDeg(s58.utils.radPiToPi(Math.atan2(deviceFrame.yAxis.x, deviceFrame.yAxis.y))));
-        deviceFrame.rotateInUniverseX(s58.utils.radToDeg(s58.utils.radPiToPi(Math.atan2(deviceFrame.yAxis.y, deviceFrame.yAxis.x))));
+        deviceFrame.rotateInUniverseY(s58.radToDeg(s58.radPiToPi(Math.atan2(deviceFrame.yAxis.x, deviceFrame.yAxis.y))));
+        deviceFrame.rotateInUniverseX(s58.radToDeg(s58.radPiToPi(Math.atan2(deviceFrame.yAxis.y, deviceFrame.yAxis.x))));
 
-        return -180 + (flip ? -1 : 1) * s58.utils.radToDeg(Math.atan2(deviceFrame.xAxis.x, deviceFrame.xAxis.y));
+        return -180 + (flip ? -1 : 1) * s58.radToDeg(Math.atan2(deviceFrame.xAxis.x, deviceFrame.xAxis.y));
     }
 
     function _getOrientationRoll(beta, gamma) {
@@ -742,7 +742,7 @@ window.addEventListener("load", function() {
         }
         adjustedBeta = (720 + 90 - adjustedBeta) % 360;
 
-        var adjustedGamma = beta >= 0 ? gamma : 180 * s58.utils.getSign(gamma) - gamma;
+        var adjustedGamma = beta >= 0 ? gamma : 180 * s58.getSign(gamma) - gamma;
         adjustedGamma = (720 + adjustedGamma) % 360;
 
         var betaAbs = Math.abs(beta);

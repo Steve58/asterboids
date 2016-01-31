@@ -28,8 +28,8 @@ g58.misc.setBrickWave = function (waveSettings) {
             waveSettings.H,
             waveSettings.W,
             waveSettings.D,
-            waveSettings.lineColour || s58.utils.rgba(50, 50, 50),
-            waveSettings.fillColour || s58.utils.rgba(100, 100, 150)));
+            waveSettings.lineColour || s58.rgba(50, 50, 50),
+            waveSettings.fillColour || s58.rgba(100, 100, 150)));
         g58.g.bricks[g58.g.bricks.length - 1].randomSpins = {
             x: waveSettings.getRotX ? waveSettings.getRotX(i) : 0,
             y: waveSettings.getRotY ? waveSettings.getRotY(i) : 0,

@@ -84,7 +84,7 @@ e58.block = {};
             }
             if (originInCameraFrame.z < 0
                     && originInCameraFrame.r > this.rMax
-                    && s58.utils.radToDeg(originInCameraFrame.phi) < 180 - e58.vars.drawYaw) {
+                    && s58.radToDeg(originInCameraFrame.phi) < 180 - e58.vars.drawYaw) {
                 // console.log("block beyond draw yaw angle");
                 // return [];
             }

@@ -48,9 +48,9 @@ e58.frame = {};
 	e58.frame.getNew = function (origin, rotation1ZDeg, rotation2YDeg, rotation3ZDeg) {
 		return new _Frame({
 			origin: origin,
-			rotation1ZRad: s58.utils.degToRad(rotation1ZDeg),
-			rotation2YRad: s58.utils.degToRad(rotation2YDeg),
-			rotation3ZRad: s58.utils.degToRad(rotation3ZDeg)
+			rotation1ZRad: s58.degToRad(rotation1ZDeg),
+			rotation2YRad: s58.degToRad(rotation2YDeg),
+			rotation3ZRad: s58.degToRad(rotation3ZDeg)
 		});
 	};
 
@@ -67,28 +67,28 @@ e58.frame = {};
     };
 
     _Frame.prototype.rotateInOwnFrameX = function (angleDeg) {
-        this.rotate(s58.utils.degToRad(angleDeg), this.xAxis);
+        this.rotate(s58.degToRad(angleDeg), this.xAxis);
         return this;
     };
     _Frame.prototype.rotateInOwnFrameY = function (angleDeg) {
-        this.rotate(s58.utils.degToRad(angleDeg), this.yAxis);
+        this.rotate(s58.degToRad(angleDeg), this.yAxis);
         return this;
     };
     _Frame.prototype.rotateInOwnFrameZ = function (angleDeg) {
-        this.rotate(s58.utils.degToRad(angleDeg), this.zAxis);
+        this.rotate(s58.degToRad(angleDeg), this.zAxis);
         return this;
     };
 
     _Frame.prototype.rotateInUniverseX = function (angleDeg) {
-        this.rotate(s58.utils.degToRad(angleDeg), e58.point.getUnitX());
+        this.rotate(s58.degToRad(angleDeg), e58.point.getUnitX());
         return this;
     };
     _Frame.prototype.rotateInUniverseY = function (angleDeg) {
-        this.rotate(s58.utils.degToRad(angleDeg), e58.point.getUnitY());
+        this.rotate(s58.degToRad(angleDeg), e58.point.getUnitY());
         return this;
     };
     _Frame.prototype.rotateInUniverseZ = function (angleDeg) {
-        this.rotate(s58.utils.degToRad(angleDeg), e58.point.getUnitZ());
+        this.rotate(s58.degToRad(angleDeg), e58.point.getUnitZ());
         return this;
     };
 
@@ -138,21 +138,21 @@ e58.frame = {};
 
     // Returns angles describing Frame orientation
     _Frame.prototype.getUprightAngles = function () {
-        var yVertDeg = s58.utils.radToDeg(s58.utils.radPiToPi(Math.atan2(
+        var yVertDeg = s58.radToDeg(s58.radPiToPi(Math.atan2(
             Math.sqrt(this.yAxis.x * this.yAxis.x + this.yAxis.z * this.yAxis.z),
             this.yAxis.y)));
-        var yVertSign = -s58.utils.getSign(this.xAxis.y);
+        var yVertSign = -s58.getSign(this.xAxis.y);
 
-        var zFlatDeg = s58.utils.radToDeg(s58.utils.radPiToPi(Math.atan2(
+        var zFlatDeg = s58.radToDeg(s58.radPiToPi(Math.atan2(
             Math.sqrt(this.zAxis.x * this.zAxis.x + this.zAxis.z * this.zAxis.z),
             this.zAxis.y)));
         zFlatDeg = (zFlatDeg + 360 - 90 + 180) % 360 - 180;
-        var zFlatSign = s58.utils.getSign(this.yAxis.y);
+        var zFlatSign = s58.getSign(this.yAxis.y);
 
-        var compassDeg = -s58.utils.radToDeg(s58.utils.radPiToPi(Math.atan2(this.zAxis.x, this.zAxis.z)));
+        var compassDeg = -s58.radToDeg(s58.radPiToPi(Math.atan2(this.zAxis.x, this.zAxis.z)));
 
 
-        var xFlatDeg = s58.utils.radToDeg(s58.utils.radPiToPi(Math.atan2(
+        var xFlatDeg = s58.radToDeg(s58.radPiToPi(Math.atan2(
             Math.sqrt(this.xAxis.x * this.xAxis.x + this.xAxis.z * this.xAxis.z),
             this.xAxis.y)));
         xFlatDeg = (xFlatDeg * zFlatSign + 360 - 90 + 180) % 360 - 180;
@@ -162,7 +162,7 @@ e58.frame = {};
         measuringFrame.rotateInOwnFrameY(-compassDeg);
         measuringFrame.rotateInOwnFrameX(-zFlatDeg);
         var xAxisInMeasuringFrame = this.xAxis.getRotatedInToFrame(measuringFrame, -1);
-        var rollDeg = -s58.utils.radToDeg(s58.utils.radPiToPi(Math.atan2(xAxisInMeasuringFrame.y, xAxisInMeasuringFrame.x)));
+        var rollDeg = -s58.radToDeg(s58.radPiToPi(Math.atan2(xAxisInMeasuringFrame.y, xAxisInMeasuringFrame.x)));
 
 
         return {

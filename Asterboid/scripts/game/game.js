@@ -6,11 +6,11 @@ window.addEventListener("load", function() {
     var i, propName;
     var game = g58.game;
     
-    var queryOptions = s58.utils.parseQueryString();
+    var queryOptions = s58.parseQueryString();
     g58.vars.options = queryOptions;
     // queryOptions.autoReloads = null;
-    document.getElementById("backToMenu").href = "Menu.htm?" + s58.utils.constructQueryStringParams(queryOptions);
-    document.getElementById("reload").href = "Game.htm?" + s58.utils.constructQueryStringParams(queryOptions);
+    document.getElementById("backToMenu").href = "Menu.htm?" + s58.constructQueryStringParams(queryOptions);
+    document.getElementById("reload").href = "Game.htm?" + s58.constructQueryStringParams(queryOptions);
     
     for (propName in e58.vars.webcam.sectors) {
         e58.vars.webcam.sectors[propName] = false;

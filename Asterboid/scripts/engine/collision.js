@@ -63,15 +63,15 @@ e58.collision = {};
 
         // Rotate for x axis along line from point 0 to point 1 in two steps
         planeFrame.rotateInOwnFrameZ(
-                -s58.utils.radToDeg(s58.utils.radPiToPi(Math.atan2(inFrame(planePoints[1]).y, inFrame(planePoints[1]).x))));
+                -s58.radToDeg(s58.radPiToPi(Math.atan2(inFrame(planePoints[1]).y, inFrame(planePoints[1]).x))));
 
 
         planeFrame.rotateInOwnFrameY(
-                -s58.utils.radToDeg(s58.utils.radPiToPi(Math.atan2(inFrame(planePoints[1]).z, inFrame(planePoints[1]).x))));
+                -s58.radToDeg(s58.radPiToPi(Math.atan2(inFrame(planePoints[1]).z, inFrame(planePoints[1]).x))));
 
         // Rotate for point 2 in x-y frame plane
         planeFrame.rotateInOwnFrameX(
-                -s58.utils.radToDeg(s58.utils.radPiToPi(Math.atan2(inFrame(planePoints[2]).z, inFrame(planePoints[2]).y))));
+                -s58.radToDeg(s58.radPiToPi(Math.atan2(inFrame(planePoints[2]).z, inFrame(planePoints[2]).y))));
 
         return planeFrame;
     }

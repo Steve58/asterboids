@@ -54,21 +54,21 @@ e58.canvas = {};
                 return;
             }
             var hypotoneuse = Math.sqrt(_instance.width * _instance.width +  _instance.height * _instance.height);
-            var context = _instance.getContext(s58.utils.rgba(0, 0));
+            var context = _instance.getContext(s58.rgba(0, 0));
             var vGradient = context.createLinearGradient(
-                0.5 * (_instance.width - hypotoneuse * Math.sin(s58.utils.degToRad(uprightAngles.xFlatDeg - s58.vars.orient))),
-                0.5 * (_instance.height - hypotoneuse * Math.cos(s58.utils.degToRad(uprightAngles.xFlatDeg - s58.vars.orient))),
-                0.5 * (_instance.width + hypotoneuse * Math.sin(s58.utils.degToRad(uprightAngles.xFlatDeg - s58.vars.orient))),
-                0.5 * (_instance.height + hypotoneuse * Math.cos(s58.utils.degToRad(uprightAngles.xFlatDeg - s58.vars.orient))));
+                0.5 * (_instance.width - hypotoneuse * Math.sin(s58.degToRad(uprightAngles.xFlatDeg - s58.vars.orient))),
+                0.5 * (_instance.height - hypotoneuse * Math.cos(s58.degToRad(uprightAngles.xFlatDeg - s58.vars.orient))),
+                0.5 * (_instance.width + hypotoneuse * Math.sin(s58.degToRad(uprightAngles.xFlatDeg - s58.vars.orient))),
+                0.5 * (_instance.height + hypotoneuse * Math.cos(s58.degToRad(uprightAngles.xFlatDeg - s58.vars.orient))));
             var halfShade = e58.vars.shading.halfShade;
-            var midShade = halfShade * (1 + Math.sin(s58.utils.degToRad(uprightAngles.zFlatDeg)) * (Math.abs(uprightAngles.xFlatDeg) <= 90 ? 1: -1));
-            var pitchFactor = Math.cos(s58.utils.degToRad(uprightAngles.zFlatDeg)) * Math.cos(s58.utils.degToRad(uprightAngles.zFlatDeg));
+            var midShade = halfShade * (1 + Math.sin(s58.degToRad(uprightAngles.zFlatDeg)) * (Math.abs(uprightAngles.xFlatDeg) <= 90 ? 1: -1));
+            var pitchFactor = Math.cos(s58.degToRad(uprightAngles.zFlatDeg)) * Math.cos(s58.degToRad(uprightAngles.zFlatDeg));
             var lightShade = midShade + halfShade * pitchFactor;
             (lightShade <= halfShade * 2) || (lightShade = halfShade * 2);
             var darkShade = midShade - halfShade * pitchFactor;
             (darkShade >= 0) || (darkShade = 0);
-            vGradient.addColorStop(0, s58.utils.rgba(Math.ceil(255 * lightShade), e58.vars.shading.transparency));
-            vGradient.addColorStop(1, s58.utils.rgba(Math.ceil(255 * darkShade), e58.vars.shading.transparency));
+            vGradient.addColorStop(0, s58.rgba(Math.ceil(255 * lightShade), e58.vars.shading.transparency));
+            vGradient.addColorStop(1, s58.rgba(Math.ceil(255 * darkShade), e58.vars.shading.transparency));
             context.fillStyle = vGradient;
             context.fillRect(0, 0, _instance.width, _instance.height);
         };
@@ -128,7 +128,7 @@ e58.canvas = {};
 
 		var _touchEndStartControlHandlerWrapper = null;
 		function _touchStartControlHandler(event, touchStartHandler) {
-			// s58.utils.pageConsoleWrite("touch mode started");
+			// s58.pageConsoleWrite("touch mode started");
 			_instance.htmlElement.removeEventListener("touchend", _touchEndStartControlHandlerWrapper);
 			console.log("Touch start");
 			document.getElementsByTagName("body")[0].className = e58.vars.activeBodyClassName;
@@ -213,7 +213,7 @@ e58.canvas = {};
         };
         _instance.arc = function (x, y, radius, startRad, endRad) {
             var drawPoint = getDrawPoint(x, y);
-            var orientRad = s58.utils.degToRad(s58.vars.orient);
+            var orientRad = s58.degToRad(s58.vars.orient);
             _instance.context.arc(drawPoint.x, drawPoint.y, radius, startRad + orientRad, endRad + orientRad);
         };
 

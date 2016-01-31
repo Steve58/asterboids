@@ -70,7 +70,7 @@ g58.control.handleControls = function (controlParams) {
     touchParts.left = touchParts.topLeft || touchParts.bottomLeft;
     touchParts.mid = touchParts.topMid || touchParts.bottomMid;
     touchParts.right = touchParts.topRight || touchParts.bottomRight;
-    // s58.utils.pageConsoleWrite(
+    // s58.pageConsoleWrite(
         // touchParts.top + ", " + touchParts.bottom + "<br/>" + touchParts.left + ", " + touchParts.right + "<br/>"
         // + touchParts.topLeft + ", " + touchParts.topRight + "<br/>" + touchParts.bottomLeft + ", " + touchParts.bottomRight);
         

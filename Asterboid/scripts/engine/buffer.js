@@ -46,7 +46,7 @@ e58.buffer = {};
         var delta = value - this.values[valueAccessor];
 
         if (Math.abs(delta) > Math.abs(this.limit)) {
-            var appliedDelta = this.constant * delta - s58.utils.getSign(delta) * this.limit;
+            var appliedDelta = this.constant * delta - s58.getSign(delta) * this.limit;
             this.values[valueAccessor] += appliedDelta;
             action && action(appliedDelta);
         }
@@ -64,7 +64,7 @@ e58.buffer = {};
         this.values[valueAccessor] = this.values[valueAccessor] || 0;
         this.values[valueAccessor] += delta;
         if (Math.abs(this.values[valueAccessor]) > Math.abs(this.limit)) {
-            var appliedDelta = this.constant * (this.values[valueAccessor] - s58.utils.getSign(this.values[valueAccessor]) * this.limit);
+            var appliedDelta = this.constant * (this.values[valueAccessor] - s58.getSign(this.values[valueAccessor]) * this.limit);
             this.values[valueAccessor] -= appliedDelta;
             action && action(appliedDelta);
         }

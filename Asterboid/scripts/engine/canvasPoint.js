@@ -36,7 +36,7 @@ e58.canvasPoint = {};
 	};
 	
     function _calculateCanvasCoordinate(coordInCameraFrame, zInCameraFrame, cameraZoom, canvasDimension) {
-        var sign = -s58.utils.getSign(zInCameraFrame);
+        var sign = -s58.getSign(zInCameraFrame);
         return 0.5 * canvasDimension
             + sign
                 * cameraZoom

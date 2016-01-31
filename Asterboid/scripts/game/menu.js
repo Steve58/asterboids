@@ -9,17 +9,17 @@
         for (optionName in options) {
             options[optionName] = document.getElementById(optionName).value;
         }
-        document.getElementById("go").href = "Game.htm?" + s58.utils.constructQueryStringParams(options);
+        document.getElementById("go").href = "Game.htm?" + s58.constructQueryStringParams(options);
         
         if (document.origin != "null") {
             // condition avoids Chrome error when using file protocol
-            window.history.replaceState(null, "", "Menu.htm?" + s58.utils.constructQueryStringParams(options));
+            window.history.replaceState(null, "", "Menu.htm?" + s58.constructQueryStringParams(options));
         }
     }
     
     (function () {
         var i;
-        var queryOptions = s58.utils.parseQueryString();
+        var queryOptions = s58.parseQueryString();
                 
         var optionName;
         for (optionName in options) {
