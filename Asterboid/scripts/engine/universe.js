@@ -35,25 +35,25 @@ e58.universe = {};
     };
 
     _Universe.prototype.render = function (camera, canvas) {
-        var i, j, swapPlane;
+        var i, j, swapPolygon;
 
         canvas.clear();
 
-        var canvasPlanes = [];
+        var canvasPolygons = [];
         for (i = 0; i < this.blocks.length; i++) {
-            canvasPlanes = canvasPlanes.concat(this.blocks[i].getCanvasPlanes(camera, canvas));
+            canvasPolygons = canvasPolygons.concat(this.blocks[i].getCanvasPolygons(camera, canvas));
         }			
-        for (i = 0; i < canvasPlanes.length; i++) {
-            for (j = i + 1; j < canvasPlanes.length; j++) {
-                if (canvasPlanes[i].distanceToCamera < canvasPlanes[j].distanceToCamera) {
-                    swapPlane = canvasPlanes[i];
-                    canvasPlanes[i] = canvasPlanes[j];
-                    canvasPlanes[j] = swapPlane;
+        for (i = 0; i < canvasPolygons.length; i++) {
+            for (j = i + 1; j < canvasPolygons.length; j++) {
+                if (canvasPolygons[i].distanceToCamera < canvasPolygons[j].distanceToCamera) {
+                    swapPolygon = canvasPolygons[i];
+                    canvasPolygons[i] = canvasPolygons[j];
+                    canvasPolygons[j] = swapPolygon;
                 }
             }
         }			
-        for (i = 0; i < canvasPlanes.length; i++) {
-            canvasPlanes[i].render();
+        for (i = 0; i < canvasPolygons.length; i++) {
+            canvasPolygons[i].render();
         }
 
         if (e58.vars.shading.enable) {

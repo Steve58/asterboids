@@ -1,16 +1,16 @@
-﻿// Plane
-// A flat polygon in 3D space, belonging to a Block
+﻿// Polygon
+// A simple convex polygon in 3D space, belonging to a Block
 
 "use strict";
 
 window.e58 = window.e58 || {};
 
-e58.plane = {};
+e58.polygon = {};
 
 (function () {
-	function _Plane (options) {
+	function _Polygon (options) {
 		var _instance = this;
-        _instance.className = "e58.plane";
+        _instance.className = "e58.polygon";
 
 		_instance.block = options.block;
         _instance.name = options.name;
@@ -28,14 +28,14 @@ e58.plane = {};
 		})();
 	}
 
-	e58.plane.getNew = function (
+	e58.polygon.getNew = function (
 		block,
         name,
 		lineColour,
 		fillColour,
 		points,
         detailLevel) {
-		return new _Plane({
+		return new _Polygon({
 			block: block,
             name: name,
 			lineColour: lineColour,
@@ -45,7 +45,7 @@ e58.plane = {};
 		});
 	};
 
-    _Plane.prototype.getUniversePoints = function () {
+    _Polygon.prototype.getUniversePoints = function () {
         var i;
         var universePoints = [];
         for (i = 0; i < this.points.length; i++) {
@@ -54,7 +54,7 @@ e58.plane = {};
         return universePoints;
     };
 
-    _Plane.prototype.getCanvasPlane = function (camera, canvas) {
-        return e58.canvasPlane.getNew(this, camera, canvas);
+    _Polygon.prototype.getCanvasPolygon = function (camera, canvas) {
+        return e58.canvasPolygon.getNew(this, camera, canvas);
     };
 })();

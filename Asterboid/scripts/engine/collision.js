@@ -17,10 +17,10 @@ e58.collision = {};
 
         calculateCachedValues([blockA, blockB]);
 
-        for (i = blockA.planes.length - 1; i >= 0; --i) {
-            for (j = blockB.planes.length - 1; j >= 0; --j) {
-                if (arePlanesInContact(blockA.planes[i], blockB.planes[j])
-                        || arePlanesInContact(blockB.planes[j], blockA.planes[i])) {
+        for (i = blockA.polygons.length - 1; i >= 0; --i) {
+            for (j = blockB.polygons.length - 1; j >= 0; --j) {
+                if (arePolygonsInContact(blockA.polygons[i], blockB.polygons[j])
+                        || arePolygonsInContact(blockB.polygons[j], blockA.polygons[i])) {
                     clearCachedValues([blockA, blockB]);
                     return true;
                 }
@@ -33,85 +33,85 @@ e58.collision = {};
 
     function calculateCachedValues(blocks) {
         blocks.forEach(function (block) {
-            block.planes.forEach(function (plane) {
-                plane.cachedUniversePoints = plane.getUniversePoints();
-                plane.cachedPlaneFrame = getPlaneFrame(plane.cachedUniversePoints);
-                plane.cachedPointsInPlaneFrame = getPlanePointsInPlaneFrame(plane);
+            block.polygons.forEach(function (polygon) {
+                polygon.cachedUniversePoints = polygon.getUniversePoints();
+                polygon.cachedPolygonFrame = getPolygonFrame(polygon.cachedUniversePoints);
+                polygon.cachedPointsInPolygonFrame = getPolygonPointsInPolygonFrame(polygon);
             });
         });
     }
 
     function clearCachedValues(blocks) {
         blocks.forEach(function (block) {
-            block.planes.forEach(function (plane) {
-                plane.cachedUniversePoints = null;
-                plane.cachedPlaneFrame = null;
-                plane.cachedPointsInPlaneFrame = null;
+            block.polygons.forEach(function (polygon) {
+                polygon.cachedUniversePoints = null;
+                polygon.cachedPolygonFrame = null;
+                polygon.cachedPointsInPolygonFrame = null;
             });
         });
     }
 
-    // Gets a frame with all planePoints in x-y plane (z = 0)
-    function getPlaneFrame(planePoints) {
-        // Assume first three plane points are not in a line
+    // Gets a frame with all polygonPoints in x-y polygon (z = 0)
+    function getPolygonFrame(polygonPoints) {
+        // Assume first three polygon points are not in a line
         // Point 0 is the origin
-        var planeFrame = e58.frame.getNew(planePoints[0], 0, 0, 0);
+        var polygonFrame = e58.frame.getNew(polygonPoints[0], 0, 0, 0);
 
         var inFrame = function (point) {
-            return point.getPointInFrame(planeFrame, /* sign: */ 1);
+            return point.getPointInFrame(polygonFrame, /* sign: */ 1);
         };
 
         // Rotate for x axis along line from point 0 to point 1 in two steps
-        planeFrame.rotateInOwnFrameZ(
-                -s58.radToDeg(s58.radPiToPi(Math.atan2(inFrame(planePoints[1]).y, inFrame(planePoints[1]).x))));
+        polygonFrame.rotateInOwnFrameZ(
+                -s58.radToDeg(s58.radPiToPi(Math.atan2(inFrame(polygonPoints[1]).y, inFrame(polygonPoints[1]).x))));
 
 
-        planeFrame.rotateInOwnFrameY(
-                -s58.radToDeg(s58.radPiToPi(Math.atan2(inFrame(planePoints[1]).z, inFrame(planePoints[1]).x))));
+        polygonFrame.rotateInOwnFrameY(
+                -s58.radToDeg(s58.radPiToPi(Math.atan2(inFrame(polygonPoints[1]).z, inFrame(polygonPoints[1]).x))));
 
-        // Rotate for point 2 in x-y frame plane
-        planeFrame.rotateInOwnFrameX(
-                -s58.radToDeg(s58.radPiToPi(Math.atan2(inFrame(planePoints[2]).z, inFrame(planePoints[2]).y))));
+        // Rotate for point 2 in x-y frame polygon
+        polygonFrame.rotateInOwnFrameX(
+                -s58.radToDeg(s58.radPiToPi(Math.atan2(inFrame(polygonPoints[2]).z, inFrame(polygonPoints[2]).y))));
 
-        return planeFrame;
+        return polygonFrame;
     }
 
-    function getPlanePointsInPlaneFrame(plane) {
+    function getPolygonPointsInPolygonFrame(polygon) {
         var pointsInFrame = [];
-        plane.cachedUniversePoints.forEach(function (point, i) {
+        polygon.cachedUniversePoints.forEach(function (point, i) {
             pointsInFrame.push(
-                point.getPointInFrame(plane.cachedPlaneFrame, /* sign: */ -1));
+                point.getPointInFrame(polygon.cachedPolygonFrame, /* sign: */ -1));
         });
         return pointsInFrame;
     }
 
-    function arePlanesInContact(linesPlane, planePlane) {
+    function arePolygonsInContact(linesPolygon, polygonPolygon) {
         var i;
-        var nLines = linesPlane.cachedUniversePoints.length;
+        var nLines = linesPolygon.cachedUniversePoints.length;
         for (i = nLines -1; i >= 0; i--) {
-            if (doesLineHitPlane(
-                    [linesPlane.cachedUniversePoints[i], linesPlane.cachedUniversePoints[(i + 1) % nLines]],
-                    planePlane)) {
+            if (doesLineHitPolygon(
+                    [linesPolygon.cachedUniversePoints[i], linesPolygon.cachedUniversePoints[(i + 1) % nLines]],
+                    polygonPolygon)) {
                 return true;
             }
         }
         return false;
     }
 
-    function doesLineHitPlane(linePoints, plane) {
-        // TODO: handle line in plane case
-        var intersectPointInPlaneFrame = getLineInfinitePlaneIntersect(linePoints, plane);
+    function doesLineHitPolygon(linePoints, polygon) {
+        // TODO: handle "line in plane" case
+        var intersectPointInPolygonFrame = getLinePlaneIntersect(linePoints, polygon);
 
-        return intersectPointInPlaneFrame ?
-            isPointInLocus(intersectPointInPlaneFrame, plane.cachedPointsInPlaneFrame):
+        return intersectPointInPolygonFrame ?
+            isPointIn2dLocus(intersectPointInPolygonFrame, polygon.cachedPointsInPolygonFrame):
             false;
     }
 
-    // Get the  intersect of the line and the x-y plane of the specified Plane's planeFrame, or null
-    function getLineInfinitePlaneIntersect(linePoints, plane) {
+    // Get the  intersect of the line and the plane of the specified Polygon, or null
+    function getLinePlaneIntersect(linePoints, polygon) {
         var linePointsInFrame = [
-            linePoints[0].getPointInFrame(plane.cachedPlaneFrame, /* sign: */ -1),
-            linePoints[1].getPointInFrame(plane.cachedPlaneFrame, /* sign: */ -1)];
+            linePoints[0].getPointInFrame(polygon.cachedPolygonFrame, /* sign: */ -1),
+            linePoints[1].getPointInFrame(polygon.cachedPolygonFrame, /* sign: */ -1)];
 
         if (linePointsInFrame[0].z * linePointsInFrame[1].z >= 0
                 || linePointsInFrame[1].z - linePointsInFrame[0].z == 0) {
@@ -127,9 +127,9 @@ e58.collision = {};
     }
 
     // Is the point within the specified locus?
-    // Assumed point and locusPoints all in x-y plane.
-    function isPointInLocus(point, locusPoints) {
-        // assume no concave sides to locus (plane)
+    // Assumed point and locusPoints all in x-y polygon.
+    function isPointIn2dLocus(point, locusPoints) {
+        // assume no concave sides to locus (polygon)
         var i, bearingDifferenceRad;
 
         for (i = locusPoints.length - 1; i >= 0; --i) {
@@ -144,7 +144,7 @@ e58.collision = {};
                 s58.TWOPI - bearingDifferenceRad;
         }
 
-        // console.log("isPointInLocus " + " x: " + point.x + " y: " + point.y + " bearingDifferenceRadSum: " + bearingDifferenceRadSum);
+        // console.log("isPointIn2dLocus " + " x: " + point.x + " y: " + point.y + " bearingDifferenceRadSum: " + bearingDifferenceRadSum);
         return bearingDifferenceRadSum > s58.TWOPI - 0.01 && bearingDifferenceRadSum < s58.TWOPI + 0.01;
     }
 })();

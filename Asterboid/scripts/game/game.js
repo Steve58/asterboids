@@ -38,7 +38,7 @@ window.addEventListener("load", function() {
         g58.sizes.ship.w,
         g58.sizes.ship.d,
         g58.colours.ship.line,
-        g58.colours.ship.plane,
+        g58.colours.ship.polygon,
         g58.colours.ship.back,
         g58.sizes.ship.xSkew,
         g58.sizes.ship.ySkew);

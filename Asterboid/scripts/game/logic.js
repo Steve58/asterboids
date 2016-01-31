@@ -45,11 +45,11 @@ g58.logic.handleCollision = function (cube) {
     g58.game.ship.invulnerable = true;
     g58.game.ship.invulnerableUntilMs = g58.game.totalElapsedMs + g58.vars.invulnerableMs;
     
-    g58.game.ship.planes.forEach(function (plane) {
-        plane.lineColour = g58.colours.invulnerableShip.line;
-        plane.fillColour = (plane.name == "back") ?
+    g58.game.ship.polygons.forEach(function (polygon) {
+        polygon.lineColour = g58.colours.invulnerableShip.line;
+        polygon.fillColour = (polygon.name == "back") ?
             g58.colours.invulnerableShip.back :
-            g58.colours.invulnerableShip.plane;
+            g58.colours.invulnerableShip.polygon;
     });
     
     e58.control.queueSound(e58.audio.sounds.crash);
@@ -59,11 +59,11 @@ g58.logic.updateShipState = function () {
     if (g58.game.ship.invulnerable && g58.game.totalElapsedMs >= g58.game.ship.invulnerableUntilMs) {
         g58.game.ship.invulnerable = false;
                 
-        g58.game.ship.planes.forEach(function (plane) {
-            plane.lineColour = g58.colours.ship.line;
-            plane.fillColour = (plane.name == "back") ?
+        g58.game.ship.polygons.forEach(function (polygon) {
+            polygon.lineColour = g58.colours.ship.line;
+            polygon.fillColour = (polygon.name == "back") ?
                 g58.colours.ship.back :
-                g58.colours.ship.plane;
+                g58.colours.ship.polygon;
         });
     }
 };

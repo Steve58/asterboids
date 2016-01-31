@@ -38,13 +38,13 @@ g58.misc.setBrickWave = function (waveSettings) {
     }
 };
 
-g58.misc.addCube = function (x, y, z, L, W, D, lineColour, planeColour, backColour, xSkew, ySkew) {    
+g58.misc.addCube = function (x, y, z, L, W, D, lineColour, polygonColour, backColour, xSkew, ySkew) {    
     L = L || g58.sizes.cube.l;
     W = W || g58.sizes.cube.w;
     D = D || g58.sizes.cube.d;
     lineColour = lineColour || g58.colours.line;
-    planeColour = planeColour || g58.colours.plane;
-    backColour = backColour || planeColour;
+    polygonColour = polygonColour || g58.colours.polygon;
+    backColour = backColour || polygonColour;
     xSkew = xSkew || 1;
     ySkew = ySkew || 1;
     
@@ -56,20 +56,20 @@ g58.misc.addCube = function (x, y, z, L, W, D, lineColour, planeColour, backColo
     var FW = W * xSkew;
     
     var cube = g58.game.universe.addBlock([x, y, z], 0, 0, 0);
-    function addPlane(points, lineCol, planeCol, name) {
-        cube.addPlane(
+    function addPolygon(points, lineCol, polygonCol, name) {
+        cube.addPolygon(
             name || "",
             lineCol || lineColour,
-            planeCol || planeColour,
+            polygonCol || polygonColour,
             points);
     }
     
-    addPlane([[ -FW, -FL, -D], [ +FW, -FL, -D], [ +FW, +FL, -D], [ -FW, +FL, -D]]);
-    addPlane([[ -W,  -L,  +D], [ +W,  -L,  +D], [ +W,  +L,  +D], [ -W,  +L,  +D]], lineColour, backColour, "back");
-    addPlane([[ -FW, -FL, -D], [ +FW, -FL, -D], [ +W,  -L,  +D], [ -W,  -L,  +D]]);
-    addPlane([[ -FW, +FL, -D], [ +FW, +FL, -D], [ +W,  +L,  +D], [ -W,  +L,  +D]]);
-    addPlane([[ -FW, -FL, -D], [ -W,  -L,  +D], [ -W,  +L,  +D], [ -FW, +FL, -D]]);
-    addPlane([[ +FW, -FL, -D], [ +W,  -L,  +D], [ +W,  +L,  +D], [ +FW, +FL, -D]]);
+    addPolygon([[ -FW, -FL, -D], [ +FW, -FL, -D], [ +FW, +FL, -D], [ -FW, +FL, -D]]);
+    addPolygon([[ -W,  -L,  +D], [ +W,  -L,  +D], [ +W,  +L,  +D], [ -W,  +L,  +D]], lineColour, backColour, "back");
+    addPolygon([[ -FW, -FL, -D], [ +FW, -FL, -D], [ +W,  -L,  +D], [ -W,  -L,  +D]]);
+    addPolygon([[ -FW, +FL, -D], [ +FW, +FL, -D], [ +W,  +L,  +D], [ -W,  +L,  +D]]);
+    addPolygon([[ -FW, -FL, -D], [ -W,  -L,  +D], [ -W,  +L,  +D], [ -FW, +FL, -D]]);
+    addPolygon([[ +FW, -FL, -D], [ +W,  -L,  +D], [ +W,  +L,  +D], [ +FW, +FL, -D]]);
     
     
     return cube;

@@ -1,4 +1,4 @@
-﻿// Block: a Frame and a set of Planes
+﻿// Block: a Frame and a set of Polygons
 "use strict"
 
 window.e58 = window.e58 || {};
@@ -13,7 +13,7 @@ e58.block = {};
 		_instance.frame = options.frame || e58.frame.getNew();
         _instance.alwaysDraw = Boolean(options.extendedOptions.alwaysDraw);
         _instance.detailLevel = 0;
-		_instance.planes = [];		
+		_instance.polygons = [];		
 		_instance.velocityInOwnFrame = e58.point.getNewXYZ(0, 0, 0);
 		_instance.xMax = 0;
         _instance.yMax = 0;
@@ -32,11 +32,11 @@ e58.block = {};
 		});
 	};
 
-    _Block.prototype.getPlane = function (name) {
+    _Block.prototype.getPolygon = function (name) {
         var i;
-        for (i = 0; i < this.planes.length; i++) {
-            if (this.planes[i].name == name) {
-                return this.planes[i];
+        for (i = 0; i < this.polygons.length; i++) {
+            if (this.polygons[i].name == name) {
+                return this.polygons[i];
             }
         }
         return null;
@@ -50,26 +50,26 @@ e58.block = {};
         this.velocityInOwnFrame = velocityInUniverse.getRotatedInToFrame(this.frame, -1);
     };
 
-    _Block.prototype.addPlane = function (name, lineColour, fillColour, points, detailLevel) {
+    _Block.prototype.addPolygon = function (name, lineColour, fillColour, points, detailLevel) {
         var i, j;
-        var plane = e58.plane.getNew(this, name, lineColour, fillColour, points, detailLevel);
-        this.planes.push(plane);
-        for (i = 0; i < this.planes.length; i++) {
-            for (j = 0; j < this.planes[i].points.length; j++) {
-                (this.xMax >= Math.abs(this.planes[i].points[j].x))
-                        || (this.xMax = Math.abs(this.planes[i].points[j].x));
-                (this.yMax >= Math.abs(this.planes[i].points[j].y))
-                        || (this.yMax = Math.abs(this.planes[i].points[j].y));
-                (this.zMax >= Math.abs(this.planes[i].points[j].z))
-                        || (this.zMax = Math.abs(this.planes[i].points[j].z));
-                (this.rMax >= this.planes[i].points[j].r)
-                        || (this.rMax = this.planes[i].points[j].r);
+        var polygon = e58.polygon.getNew(this, name, lineColour, fillColour, points, detailLevel);
+        this.polygons.push(polygon);
+        for (i = 0; i < this.polygons.length; i++) {
+            for (j = 0; j < this.polygons[i].points.length; j++) {
+                (this.xMax >= Math.abs(this.polygons[i].points[j].x))
+                        || (this.xMax = Math.abs(this.polygons[i].points[j].x));
+                (this.yMax >= Math.abs(this.polygons[i].points[j].y))
+                        || (this.yMax = Math.abs(this.polygons[i].points[j].y));
+                (this.zMax >= Math.abs(this.polygons[i].points[j].z))
+                        || (this.zMax = Math.abs(this.polygons[i].points[j].z));
+                (this.rMax >= this.polygons[i].points[j].r)
+                        || (this.rMax = this.polygons[i].points[j].r);
             }
         }
-        return plane;
+        return polygon;
     };
 
-    _Block.prototype.getCanvasPlanes = function (camera, canvas) {
+    _Block.prototype.getCanvasPolygons = function (camera, canvas) {
         var i;
         if (!this.alwaysDraw) {
             if (this.frame.origin.getDistance(camera.frame.origin)
@@ -90,13 +90,13 @@ e58.block = {};
             }
         }
 
-        var canvasPlanes = [];
-        for (i = 0; i < this.planes.length; i++) {
-            if (this.detailLevel >= this.planes[i].detailLevel) {
-                canvasPlanes.push(this.planes[i].getCanvasPlane(camera, canvas));
+        var canvasPolygons = [];
+        for (i = 0; i < this.polygons.length; i++) {
+            if (this.detailLevel >= this.polygons[i].detailLevel) {
+                canvasPolygons.push(this.polygons[i].getCanvasPolygon(camera, canvas));
             }
         }
-        return canvasPlanes;
+        return canvasPolygons;
     };
 
     _Block.prototype.updateLogic = function (control) {

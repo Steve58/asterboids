@@ -1,18 +1,18 @@
-﻿// CanvasPlane
-// A wrapper for a Plane, with CanvaPoints calculated for rendering
+﻿// CanvasPolygon
+// A wrapper for a Polygon, with CanvaPoints calculated for rendering
 
 "use strict";
 
 window.e58 = window.e58 || {};
 
-e58.canvasPlane = {};
+e58.canvasPolygon = {};
 
 (function () {
-	function _CanvasPlane (options) {
+	function _CanvasPolygon (options) {
         var _instance = this;
-		_instance.className = "e58.canvasPlane";
+		_instance.className = "e58.canvasPolygon";
 
-        _instance.plane = options.plane;
+        _instance.polygon = options.polygon;
         _instance.camera = options.camera;
         _instance.canvas = options.canvas;
 				
@@ -32,7 +32,7 @@ e58.canvasPlane = {};
 			var w = _instance.canvas.width;
 			var h = _instance.canvas.height;
 			
-			var universePoints = _instance.plane.getUniversePoints();
+			var universePoints = _instance.polygon.getUniversePoints();
 			var canvasPoints = [];
 			for (i = 0; i < universePoints.length; i++) {
 				canvasPoints[i] = e58.canvasPoint.getNew(_instance.camera, _instance.canvas, universePoints[i]);
@@ -83,24 +83,24 @@ e58.canvasPlane = {};
 		})();
 	}
 	
-	e58.canvasPlane.getNew = function (
-		plane,
+	e58.canvasPolygon.getNew = function (
+		polygon,
 		camera,
 		canvas) {
-		return new _CanvasPlane({
-			plane: plane,
+		return new _CanvasPolygon({
+			polygon: polygon,
 			camera: camera,
 			canvas: canvas
 		});
 	};
 
-    _CanvasPlane.prototype.render = function () {
+    _CanvasPolygon.prototype.render = function () {
         var i;
         if (!this.canvasPoints.length) {
             return;
         }
 
-        var context = this.canvas.getContext(this.plane.lineColour, this.plane.fillColour);
+        var context = this.canvas.getContext(this.polygon.lineColour, this.polygon.fillColour);
         context.beginPath();
 
         context.moveTo(
