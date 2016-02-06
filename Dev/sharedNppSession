@@ -1,11 +1,11 @@
 <NotepadPlus>
     <Session activeView="0">
         <mainView activeIndex="0">
-            <File firstVisibleLine="0" xOffset="0" scrollWidth="2328" startPos="0" endPos="0" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\Stephen\Documents\Dev\Asterboid\Dev\sharedNppSession" backupFilePath="" originalFileLastModifTimestamp="1454168602" />
-            <File firstVisibleLine="0" xOffset="0" scrollWidth="2376" startPos="0" endPos="0" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\Stephen\Documents\Dev\Asterboid\Dev\engineNppSession" backupFilePath="" originalFileLastModifTimestamp="1454248017" />
-            <File firstVisibleLine="0" xOffset="941" scrollWidth="2376" startPos="0" endPos="0" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\Stephen\Documents\Dev\Asterboid\Dev\gameNppSession" backupFilePath="" originalFileLastModifTimestamp="1454248288" />
-            <File firstVisibleLine="0" xOffset="0" scrollWidth="248" startPos="125" endPos="125" selMode="0" lang="JavaScript" encoding="-1" filename="C:\Users\Stephen\Documents\Dev\Asterboid\Asterboid\scripts\shared\vars.js" backupFilePath="" originalFileLastModifTimestamp="1454249789" />
-            <File firstVisibleLine="0" xOffset="0" scrollWidth="976" startPos="7309" endPos="7309" selMode="0" lang="JavaScript" encoding="-1" filename="C:\Users\Stephen\Documents\Dev\Asterboid\Asterboid\scripts\shared\shared.js" backupFilePath="" originalFileLastModifTimestamp="1454249860" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="2328" startPos="0" endPos="0" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\Stephen\Documents\Dev\asterboids\Dev\sharedNppSession" backupFilePath="" originalFileLastModifTimestamp="1454168602" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="2376" startPos="0" endPos="0" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\Stephen\Documents\Dev\asterboids\Dev\engineNppSession" backupFilePath="" originalFileLastModifTimestamp="1454248017" />
+            <File firstVisibleLine="0" xOffset="941" scrollWidth="2376" startPos="0" endPos="0" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\Stephen\Documents\Dev\asterboids\Dev\gameNppSession" backupFilePath="" originalFileLastModifTimestamp="1454248288" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="248" startPos="125" endPos="125" selMode="0" lang="JavaScript" encoding="-1" filename="C:\Users\Stephen\Documents\Dev\asterboids\asterboids\scripts\shared\vars.js" backupFilePath="" originalFileLastModifTimestamp="1454249789" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="976" startPos="7309" endPos="7309" selMode="0" lang="JavaScript" encoding="-1" filename="C:\Users\Stephen\Documents\Dev\asterboids\asterboids\scripts\shared\shared.js" backupFilePath="" originalFileLastModifTimestamp="1454249860" />
         </mainView>
         <subView activeIndex="0" />
     </Session>
