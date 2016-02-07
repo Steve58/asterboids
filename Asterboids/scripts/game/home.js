@@ -1,15 +1,14 @@
-﻿// menu
-// Menu page script
+// home
+// Home page script
 
 "use strict";
 
 window.addEventListener("load", function() {
     var options = {
-        cameraSplitMode: null,
-        flipCamera: null,
-        antiAliasing: null,
-        sound: null,
-        menu: true
+        cameraSplitMode: "viewCentreAimCentre",
+        flipCamera: false,
+        antiAliasing: true,
+        sound: null
     };
         
     function refreshOptions() {

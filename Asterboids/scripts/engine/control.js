@@ -528,18 +528,48 @@ window.addEventListener("load", function() {
 
     function _touchMoveHandler(event) {
         event.preventDefault();
+        
+        var w = _touchCanvas.width;
+        var h = _touchCanvas.height;
+        
         _doForEachChangedTouch(event, function (changedTouch) {
             var currentTouchIndex = _getCurrentTouchIndexById(changedTouch.identifier);
+            
             if (currentTouchIndex < 0) {
+                // Touch not found
                 return;
             }
+            
+            // Detect which touch move pad the touch is in, if any
+            var pad, padIndex;
+            for (padIndex = 0; padIndex < e58.vars.touchMovePads.length; padIndex++) {
+                pad = e58.vars.touchMovePads[padIndex];
+                if (changedTouch.pageX >= s58.getOrientDimension(pad.xMin * w, pad.yMin * h)
+                        && changedTouch.pageX <= s58.getOrientDimension(pad.xMax * w, pad.yMax * h)
+                        && changedTouch.pageY >= s58.getOrientDimension(pad.yMin * h, pad.xMin * w)
+                        && changedTouch.pageY <= s58.getOrientDimension(pad.yMax * h, pad.xMax * w)) {                    
+                    _updateTouchMove(changedTouch, currentTouchIndex, pad);
+                }
+            }
+            
+            _currentTouches[currentTouchIndex] = changedTouch;
+        });
+        // s58.pageConsoleWrite("touch move, current touches count: " + _currentTouches.length);
+        
+        if (s58.isChrome) {
+            // call poll manually - touch move can prevent interval in Chrome
+            _pollIfDue();
+        }
+    }
+    
+    function _updateTouchMove(changedTouch, currentTouchIndex, touchMovePad) {
+        // Handle the move if inside a touch move pad
+        if (touchMovePad) {
             var changeX = changedTouch.pageX - _currentTouches[currentTouchIndex].pageX;
             var changeY = changedTouch.pageY - _currentTouches[currentTouchIndex].pageY;
             _touchMove.x += s58.getOrientCoordX(changeX, changeY);
             _touchMove.y += s58.getOrientCoordY(changeY, changeX);
-            _currentTouches[currentTouchIndex] = changedTouch;
-        });
-        // s58.pageConsoleWrite("touch move, current touches count: " + _currentTouches.length);
+        }
     }
 
     function _doForEachChangedTouch(event, doFunction) {

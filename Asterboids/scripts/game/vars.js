@@ -3,7 +3,8 @@
 g58.vars = {
     defaultOptions: {
         cameraSplitMode: "viewCentreAimCentre",
-        flipCamera: "false"
+        flipCamera: "false",
+        sound: false
     },
     
     enablePauseDelayMs: 500,
@@ -13,7 +14,8 @@ g58.vars = {
     invulnerableMs: 1000,
     
     ship: {
-        rotateSpeed: 0.001
+        initialSpeed: 30,
+        acceleration: 0.005
     },
     
     webcam: {

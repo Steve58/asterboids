@@ -10,6 +10,5 @@ s58.vars = {
     autoOrient: true,
     orient: 0,
     closeTo: 0.0001,
-    pageConsoleIntervalMs: 200,
-    
+    pageConsoleIntervalMs: 200
 };

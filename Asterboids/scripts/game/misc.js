@@ -8,7 +8,7 @@ g58.misc.setBrickWave = function (waveSettings) {
     var i;
     
     function defaultGetZ(i) {
-        return i * (waveSettings.z || 20000);
+        return i * (waveSettings.Z || 20000);
     }
         
     (g58.game.bricks || []).forEach(function () {
@@ -19,12 +19,11 @@ g58.misc.setBrickWave = function (waveSettings) {
     var W = 1500;
     var H = 1000;
     var D = 20000;
-    var Z = 50000;
     for (i = 0; i < waveSettings.length; i++) {
         g58.game.bricks.push(g58.misc.addCube(
             waveSettings.getX(i),
             waveSettings.getY(i),
-            -1000000 - (waveSettings.getZ || defaultGetZ)(i),
+            -(waveSettings.O || 1000000) - (waveSettings.getZ || defaultGetZ)(i),
             waveSettings.H,
             waveSettings.W,
             waveSettings.D,

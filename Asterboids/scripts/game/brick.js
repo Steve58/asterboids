@@ -30,10 +30,10 @@ g58.brick.waves = [];
     g58.brick.waveIndex = 0;
     
     g58.brick.waves.push({
-        length: 200,
+        length: 52,
         W: 1200,
         H: 800,
-        D: 4000,
+        D: 8000,
         getX: function (i) {
             return 8000 * [-1, -1, +1, +1][i % 4];
         },
@@ -47,10 +47,10 @@ g58.brick.waves = [];
     
     
     g58.brick.waves.push({
-        length: 100,
+        length: 50,
         W: 800,
         H: 600,
-        D: 2000,
+        D: 8000,
         getX: getSinFunction(20, 10000),
         getY: getCosFunction(20, 10000)
     });
@@ -59,18 +59,19 @@ g58.brick.waves = [];
         length: 100,
         W: 500,
         H: 500,
-        D: 500,
-        getX: getRandomFunction(15000),
-        getY: getRandomFunction(10000)
+        D: 8000,
+        getX: getRandomFunction(30000),
+        getY: getRandomFunction(20000)
     });
     
     g58.brick.waves.push({
         length: 200,
         W: 500,
         H: 500,
-        D: 2000,
-        getX: getSinFunction(30, 10000, 0, 200),
-        getY: getCosFunction(30, 0, 10000, 200)
+        D: 5000,
+        Z: 40000,
+        getX: getSinFunction(50, 10000, 0, 200),
+        getY: getCosFunction(50, 10000, 0, 200)
     });
     
     g58.brick.waves.push({
@@ -78,8 +79,8 @@ g58.brick.waves = [];
         W: 500,
         H: 500,
         D: 500,
-        getX: getRandomFunction(15000),
-        getY: getRandomFunction(10000),
+        getX: getRandomFunction(30000),
+        getY: getRandomFunction(20000),
         getRotZ: function (i) { return [-1, +1][i % 2]; }
     });
     
@@ -88,20 +89,21 @@ g58.brick.waves = [];
         W: 500,
         H: 500,
         D: 500,
-        getX: getRandomFunction(15000),
-        getY: getRandomFunction(10000),
+        getX: getRandomFunction(30000),
+        getY: getRandomFunction(20000),
         getRotX: getRandomFunction(2),
         getRotY: getRandomFunction(2),
         getRotZ: getRandomFunction(2)
     });
     
     g58.brick.waves.push({
-        length: 100,
+        length: 200,
         W: 800,
         H: 600,
-        D: 2000,
-        getX: getSinFunction(50, 6000),
-        getY: getCosFunction(50, 4000)
+        D: 8000,
+        Z: 40000,
+        getX: getSinFunction(50, 10000),
+        getY: getCosFunction(50, 75000)
     });
     
     g58.brick.waves.push({
@@ -118,8 +120,8 @@ g58.brick.waves = [];
         W: 500,
         H: 500,
         D: 2000,
-        getX: getSinFunction(50, 10000, 0, 200),
-        getY: getCosFunction(50, 10000, 0, 200)
+        getX: getSinFunction(30, 10000, 0, 200),
+        getY: getCosFunction(30, 0, 10000, 200)
     });
     
     g58.brick.waves.push({
@@ -127,9 +129,9 @@ g58.brick.waves = [];
         W: 500,
         H: 500,
         D: 2000,
-        z: 40000,
-        getX: getRandomFunction(15000),
-        getY: getRandomFunction(10000),
+        Z: 50000,
+        getX: getRandomFunction(30000),
+        getY: getRandomFunction(20000),
         getRotX: getRandomFunction(2)
     });
     
@@ -138,9 +140,9 @@ g58.brick.waves = [];
         W: 500,
         H: 500,
         D: 2000,
-        z: 40000,
-        getX: getRandomFunction(15000),
-        getY: getRandomFunction(10000),
+        Z: 50000,
+        getX: getRandomFunction(30000),
+        getY: getRandomFunction(20000),
         getRotY: getRandomFunction(2)
     });
     
@@ -149,9 +151,9 @@ g58.brick.waves = [];
         W: 2000,
         H: 500,
         D: 500,
-        z: 40000,
-        getX: getRandomFunction(15000),
-        getY: getRandomFunction(10000),
+        Z: 50000,
+        getX: getRandomFunction(30000),
+        getY: getRandomFunction(20000),
         getRotZ: getRandomFunction(2)
     });
 })();

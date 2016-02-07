@@ -5,10 +5,10 @@
 
 window.e58 = window.e58 || {};
 
-e58.collision = {};
+e58.collisions = {};
 
 (function () {
-    e58.collision.areBlocksInContact = function (blockA, blockB) {
+    e58.collisions.areBlocksInContact = function (blockA, blockB) {
         var i, j;
 
         if (blockA.frame.origin.getDistance(blockB.frame.origin) > blockA.rMax + blockB.rMax) {

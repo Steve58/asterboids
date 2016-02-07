@@ -30,13 +30,13 @@ e58.frame = {};
 
         // First rotation angle used to rotate points into this frame
 		_instance.phiXY = null;
-        
+
         // Rotation axis used to rotate points into this frame
 		_instance.phiXyAxis = null;
-        
+
         // Second rotation angle used to rotate points into this frame
 		_instance.thetaZ = null;
-        
+
         // Calculate rotation angles and axis
 		_instance.calculateRotations();
 	}

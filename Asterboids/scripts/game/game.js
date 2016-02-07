@@ -9,8 +9,12 @@ window.addEventListener("load", function() {
     var queryOptions = s58.parseQueryString();
     g58.vars.options = queryOptions;
     // queryOptions.autoReloads = null;
-    document.getElementById("backToMenu").href = "Menu.htm?" + s58.constructQueryStringParams(queryOptions);
+    document.getElementById("back").href =
+            (queryOptions.menu ? "Menu.htm?" : "Home.htm?") + s58.constructQueryStringParams(queryOptions);
     document.getElementById("reload").href = "Game.htm?" + s58.constructQueryStringParams(queryOptions);
+    
+    e58.vars.sound.enable = queryOptions.sound;
+    e58.vars.integerPixels = !queryOptions.antiAliasing;
     
     for (propName in e58.vars.webcam.sectors) {
         e58.vars.webcam.sectors[propName] = false;
@@ -30,7 +34,7 @@ window.addEventListener("load", function() {
     game.universe = e58.universe.getNew();
     game.camera = game.universe.addCamera([0, 0, 0], 0, 0, 0, game.canvas.getStandardZoom());
     game.cameraBlock = game.universe.addBlock([0, 0, 0], 0, 0, 0);
-    game.cameraBlock.velocityInOwnFrame.z = -20;
+    game.cameraBlock.velocityInOwnFrame.z = -g58.vars.ship.initialSpeed;
     
     game.ship = g58.misc.addCube(
         0, 0, 0,

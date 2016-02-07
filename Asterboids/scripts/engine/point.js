@@ -75,11 +75,11 @@ e58.point = {};
         sign = (sign && sign > 0) ? 1 : -1;
         var rotatedPoint = this;
         if (sign > 0) {
-            rotatedPoint = this.getRotated(frame.phiXY * sign, frame.phiXyAxis);
+            rotatedPoint = rotatedPoint.getRotated(frame.phiXY * sign, frame.phiXyAxis);
         }
-        rotatedPoint = this.getRotated(frame.thetaZ * sign, frame.zAxis);
+        rotatedPoint = rotatedPoint.getRotated(frame.thetaZ * sign, frame.zAxis);
         if (sign < 0) {
-            rotatedPoint = this.getRotated(frame.phiXY * sign, frame.phiXyAxis);
+            rotatedPoint = rotatedPoint.getRotated(frame.phiXY * sign, frame.phiXyAxis);
         }
         return rotatedPoint;
     }

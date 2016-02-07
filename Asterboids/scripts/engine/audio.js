@@ -9,8 +9,8 @@ e58.audio = {
     context: new (window.AudioContext || window.webkitAudioContext)(),
     sounds: { /* Named sounds, each with play(options) and stopLoop(tag) functions */ },
     urls: {
-        engine: "sounds/engine.ogg",
-        crash: "sounds/crash.ogg"
+        crash: "sounds/crash.ogg",
+        space: "sounds/space.ogg"
     },
     defaultGain: 0.5,
     defaultTag: "defaultTag"

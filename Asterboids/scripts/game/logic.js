@@ -5,7 +5,7 @@ g58.logic = {};
 g58.logic.updateLogic = function (controlParams) {
     var i;
     
-    g58.game.cameraBlock.velocityInOwnFrame.z -= 0.002 * controlParams.msSinceLastLogic;
+    g58.game.cameraBlock.velocityInOwnFrame.z -= g58.vars.ship.acceleration * controlParams.msSinceLastLogic;
     
     g58.game.bricks.forEach(function (cube) {
         cube.frame.rotateInOwnFrameX(cube.randomSpins.x * g58.vars.cubeSpinSpeed * controlParams.msSinceLastLogic);
@@ -35,7 +35,7 @@ g58.logic.detectCollision = function () {
     }
     
     g58.game.bricks.forEach(function (cube, i) {
-        if (e58.collision.areBlocksInContact(g58.game.ship, cube)) {
+        if (e58.collisions.areBlocksInContact(g58.game.ship, cube)) {
             g58.logic.handleCollision(cube);
         }
     });

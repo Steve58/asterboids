@@ -24,6 +24,8 @@ e58.vars = {
     requestPointerLockDelayMs: 2000,
     soundLoopCheckMs: 1000,
 
+    touchMovePads: [{ xMin: 0, xMax: 0.5, yMin: 0, yMax: 1 }],
+    
     control: {
         logEnabled: false,
         toggleMs: 500,

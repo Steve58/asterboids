@@ -25,7 +25,7 @@ g58.control.start = function (event, touchCanvas) {
         g58.rendering.render,
         touchCanvas);
         
-    e58.control.queueSound(e58.audio.sounds.engine, { loop: true });
+    e58.control.queueSound(e58.audio.sounds.space, { loop: true });
 };
 
 g58.control.stop = function (event) {

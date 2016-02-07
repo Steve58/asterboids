@@ -1,6 +1,8 @@
 ﻿// shared
 // Shared utilities and constants
 
+"use strict";
+
 window.s58 = window.s58 || {};
 
 s58.shared = {};
@@ -17,6 +19,34 @@ window.addEventListener("error", function (event) {
         alert("error: " + event.message);
     }
 });
+
+window.addEventListener("load", function () {
+    window.addEventListener("deviceorientation", orientationHandler);
+    window.addEventListener("devicemotion", motionHandler);
+    
+    function orientationHandler(event) {
+        window.removeEventListener("deviceorientation", orientationHandler);
+        s58.deviceOrientationDetected = event.absolute && (event.alpha || event.beta || event.gamma);
+    }
+    
+    function motionHandler(event) {
+        window.removeEventListener("devicemotion", motionHandler);
+        s58.deviceMotionDetected = event.rotationRate.alpha || event.rotationRate.beta || event.rotationRate.gamma;
+    }
+});
+
+s58.getScreenOrientation = function () {
+    switch(window.screen && window.screen.orientation && window.screen.orientation.type) {
+        case "landscape-secondary":
+            return { landscape: true, secondary: true, landscapeSecondary: true };
+        case "portrait-secondary":
+            return { portrait: true, secondary: true, portraitSecondary: true };
+        case "landscape-primary":
+            return { landscape: true, primary: true, landscapePrimary: true };
+        default /* "portrait-primary" */:
+            return { portrait: true, primary: true, portraitPrimary: true };
+    }
+};
 
 s58.getOrientDimension = function (standard, rotated) {
     switch (s58.vars.orient) {
