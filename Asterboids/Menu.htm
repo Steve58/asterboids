@@ -36,10 +36,10 @@
             Camera Split Mode
             </label>
             <select id="cameraSplitMode">
-                <option value="fullView">Full - View</option>
-                <option value="fullAim">Full - Aim</option>
-                <option value="viewCentreAimCentre">View + Central Aim</option>
-                <option value="edgeTracking">Edge tracking</option>
+                <option value="fullView">Full Camera - View - Headtorch</option>
+                <option value="fullAim">Full Camera - Aim - Torch</option>
+                <option value="viewCentreAimCentre">Top &amp; Bottom - View &amp; Aim - Headtorch &amp; Torch</option>
+                <option value="edgeTracking">Full Camera - View - Edge Detection</option>
             </select>
         </div>
         <div class="item">
@@ -56,6 +56,15 @@
                 Ship
             </label>
             <select id="ship">
+                <option value="false">Off</option>
+                <option value="true">On</option>
+            </select>
+        </div>
+        <div class="item">
+            <label for="move">
+                Travel
+            </label>
+            <select id="move">
                 <option value="false">Off</option>
                 <option value="true">On</option>
             </select>

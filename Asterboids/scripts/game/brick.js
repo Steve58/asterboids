@@ -28,6 +28,25 @@ g58.brick.waves = [];
     }
     
     g58.brick.waveIndex = 0;
+        
+    g58.brick.waves.push({
+        length: 100,
+        W: 1200,
+        H: 800,
+        D: 8000,
+        getX: function (i) {
+            return 6000 * [-1, -1, +1, +1][i % 4];
+        },
+        getY: function (i) {
+            return 3000 * [-1, +1, -1, +1][i % 4];
+        },
+        getZ: function (i) {
+            return 300000 - 50000 * Math.floor(i / 4);
+        }
+    });
+
+
+
     
     g58.brick.waves.push({
         length: 52,

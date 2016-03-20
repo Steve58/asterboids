@@ -5,7 +5,9 @@ g58.logic = {};
 g58.logic.updateLogic = function (controlParams) {
     var i;
     
-    g58.game.cameraBlock.velocityInOwnFrame.z -= g58.vars.ship.acceleration * controlParams.msSinceLastLogic;
+    if (g58.vars.options.move) {
+        g58.game.cameraBlock.velocityInOwnFrame.z -= g58.vars.ship.acceleration * controlParams.msSinceLastLogic;
+    }
     
     g58.game.bricks.forEach(function (cube) {
         cube.frame.rotateInOwnFrameX(cube.randomSpins.x * g58.vars.cubeSpinSpeed * controlParams.msSinceLastLogic);
@@ -13,7 +15,7 @@ g58.logic.updateLogic = function (controlParams) {
         cube.frame.rotateInOwnFrameZ(cube.randomSpins.z * g58.vars.cubeSpinSpeed * controlParams.msSinceLastLogic);
     });
     
-    if (g58.game.cameraBlock.frame.origin.z < g58.game.bricks[g58.game.bricks.length - 1].frame.origin.z - 10000) {
+    if (g58.vars.options.move && g58.game.cameraBlock.frame.origin.z < g58.game.bricks[g58.game.bricks.length - 1].frame.origin.z - 10000) {
         g58.game.cameraBlock.frame = e58.frame.getNew([0, 0, 0], 0, 0, 0);
         g58.game.ship.frame = e58.frame.getNew([0, 0, -10000], 0, 0, 0);
         g58.misc.setBrickWave();

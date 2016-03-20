@@ -5,10 +5,13 @@
 
 window.addEventListener("load", function() {
     var options = {
-        cameraSplitMode: "viewCentreAimCentre",
-        flipCamera: false,
-        antiAliasing: true,
-        sound: null
+        cameraSplitMode: null,
+        flipCamera: null,
+        ship: null,
+        move: null,
+        antiAliasing: null,
+        sound: null,
+        menu: true
     };
         
     function refreshOptions() {

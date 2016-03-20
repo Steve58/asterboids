@@ -8,6 +8,7 @@ window.addEventListener("load", function() {
         cameraSplitMode: null,
         flipCamera: null,
         ship: null,
+        move: null,
         antiAliasing: null,
         sound: null,
         menu: true

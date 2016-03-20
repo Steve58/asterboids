@@ -5,6 +5,7 @@ g58.vars = {
         cameraSplitMode: "viewCentreAimCentre",
         flipCamera: "false",
         ship: true,
+        move: true,
         sound: false
     },
     
@@ -23,7 +24,7 @@ g58.vars = {
         moveSpeed: 1,
         rotateSpeed: 0.001,
         viewCoordConstant: 10000,
-        aimCoordConstant: 5000,
+        aimCoordConstant: 10000,
         viewBuffer: { limit: 0.01, constant: 0.5 }
     }
 };

@@ -153,15 +153,15 @@ e58.webcam.start = function () {
         
         // console.log(edges.length);
         
-        var showEdges = edges.length;
-        if (!true) {
+        var showEdges = 1000; // edges.length;
+        if (true) {
             canvasContext.fillStyle = s58.rgba(0);
             canvasContext.fillRect(0, 0, canvasElement.width, canvasElement.height);
             canvasContext.fillStyle = s58.rgba(0, 0);
-            canvasContext.strokeStyle = s58.rgba(255, 1);
+            canvasContext.strokeStyle = s58.rgba(0, 255, 0, 1);
             canvasContext.beginPath();
             edges.slice(0, showEdges).forEach(function (edge, i) {
-                canvasContext.strokeStyle = s58.rgba(255, edge.diff);
+                canvasContext.strokeStyle = s58.rgba(255, 255, 255, edge.diff);
                 canvasContext.moveTo(edge.x - 1, edge.y);
                 canvasContext.lineTo(edge.x + 1, edge.y);
             });
@@ -171,7 +171,8 @@ e58.webcam.start = function () {
         var maxEdges = showEdges;
         var edgeSumX = 0;
         var edgeSumY = 0;
-        edges.slice(0, maxEdges).forEach(function (edge, i) {
+        edges = edges.slice(0, maxEdges)
+        edges.forEach(function (edge, i) {
             edgeSumX += edge.x;
             edgeSumY += edge.y;
         });
@@ -190,7 +191,7 @@ e58.webcam.start = function () {
                 2 * (canvasElement.width / 2 - rawEdgeMean.x) / canvasElement.width),
         };
         
-        fitTemplate(edges);
+        e58.webcam.edgeTrackingShapeFit = fitTemplate(edges);
         
         e58.webcam.processing = false;
     };    
@@ -223,10 +224,24 @@ e58.webcam.start = function () {
     }
     
     function fitTemplate(edges) {
-        var x, y;
+        var x, y, i,s ;
         var canvasElement = e58.webcam.canvasElement;
         var canvasContext = e58.webcam.canvasContext;
         var pixels = [];
+        // for (x = 0; x < canvasElement.width; x++) {
+            // pixels[x] = [];
+            // for (y = 0; y < canvasElement.height; y++) {
+                // pixels[x][y] = (edges
+                    // .filter(e => e.x == x && e.y == y)
+                    // .sort((a, b) => a.diff < b.diff)[0] || { diff: 0 }).diff;
+            // }
+        // }
+        
+        edges.forEach(function (edge) {
+            pixels[edge.x] = pixels[edge.x] || [];
+            pixels[edge.x][edge.y] = [(pixels[edge.x][edge.y] || 0), edge.diff].sort((a, b) => a < b)[0];
+        });
+        
         for (x = 0; x < canvasElement.width; x++) {
             pixels[x] = [];
             for (y = 0; y < canvasElement.height; y++) {
@@ -236,7 +251,7 @@ e58.webcam.start = function () {
             }
         }
         
-        if (true) {
+        if (!true) {
             canvasContext.fillStyle = s58.rgba(0);
             canvasContext.fillRect(0, 0, canvasElement.width, canvasElement.height);
             canvasContext.fillStyle = s58.rgba(0, 0);
@@ -244,7 +259,7 @@ e58.webcam.start = function () {
             canvasContext.beginPath();
             for (x = 0; x < canvasElement.width; x++) {
                 for (y = 0; y < canvasElement.height; y++) {
-                    if (pixels[x][y] > 0) {
+                    if (pixels[x][y]) {
                         canvasContext.strokeStyle = s58.rgba(255, pixels[x][y]);
                         canvasContext.moveTo(x - 1, y);
                         canvasContext.lineTo(x + 1, y);
@@ -257,66 +272,147 @@ e58.webcam.start = function () {
         var w = canvasElement.width;
         var h = canvasElement.height;
         
-        var templatePoints = [
-            [0.4, 0.6],
-            [0.4, 0.4],
-            [0.45, 0.35],
-            [0.48, 0.32],
-            [0.52, 0.32],
-            [0.55, 0.35],
-            [0.6, 0.4],
-            [0.6, 0.6],
-        ];
-        templatePoints.forEach(p => p[0] = Math.floor(p[0] * w));
-        templatePoints.forEach(p => p[1] = Math.floor(p[1] * h));
         
-        var templateXs = [-0.5, -0.4, -0.3, -0.2, -0.1, 0.0, 0.1, 0.2, 0.3, 0.4, 0.5];
+        var armX = 0.6;
+        var armY = 0.9;
+        var armL = 0.1;
+        var armG = 2.0;
+        var armN = 3;
+        var shoulderX = 0.5;
+        var shoulderY = 0.6;
+        var shoulderL = 0.25;
+        var shoulderG = 0.45;
+        var shoulderN = 5;
+        var headR = 0.2;
+        var headHalfN = 20;
         
-        var optimiumX = optimiseTemplateX(templateXs, templatePoints, pixels);
-        templatePoints.forEach(p => Math.floor(p[0] = p[0] + optimiumX * 0.5 * w));
+        var templatePoints = [];
+        for (i = 0; i <= armN; i++) {
+            templatePoints.push({
+                x: -armX + (i * armL / armN),
+                y: +armY - (i * armG * armL / armN)
+            });
+        }
+        for (i = 0; i <= shoulderN; i++) {
+            templatePoints.push({
+                x: -shoulderX + (i * shoulderL / shoulderN),
+                y: +shoulderY - (i * shoulderG * shoulderL / shoulderN)
+            });
+        }
+        for (i = -headHalfN; i <= headHalfN; i++) {
+            templatePoints.push({
+                x: +headR * Math.sin(i * s58.HALFPI / headHalfN),
+                y: -headR * Math.cos(i * s58.HALFPI / headHalfN)
+            });
+        }
+        for (i = shoulderN; i >= 0; i--) {
+            templatePoints.push({
+                x: +shoulderX - (i * shoulderL / shoulderN),
+                y: +shoulderY - (i * shoulderG * shoulderL / shoulderN)
+            });
+        }
+        for (i = armN; i >= 0; i--) {
+            templatePoints.push({
+                x: +armX - (i * armL / armN),
+                y: +armY - (i * armG * armL / armN)
+            });
+        }
+                
+        var templateShiftMax = 0.5;
+        var templateShiftHalfN = 10;
+        var templateXs = [];
+        var templateYs = [];
+        for (i = 0; i < templateShiftHalfN * 2 + 1; i++) {
+            templateXs.push(templateShiftMax * (i - templateShiftHalfN) / templateShiftHalfN);
+            templateYs.push(templateShiftMax * (i - templateShiftHalfN) / templateShiftHalfN);
+        }
+        
+        var templateScaleMin = 0.5;
+        var templateScaleMax = 0.5;
+        var templateScaleStep = 0.1;
+        var templateScales = [];
+        for (s = templateScaleMin; s <= templateScaleMax; s += templateScaleStep) {
+            templateScales.push(s);
+        }
+        
+        var optimum = optimiseTemplate(templateScales, templateXs, templateYs, templatePoints, pixels, edges);
+        templatePoints.forEach(p => p.x = p.x * optimum.s + optimum.x);
+        templatePoints.forEach(p => p.y = p.y * optimum.s + optimum.y);
         
         if (true) {
-            canvasContext.strokeStyle = s58.rgba(255, 0, 0, 1);
+            canvasContext.strokeStyle = s58.rgba(255, 0, 0);
             canvasContext.beginPath();
-            canvasContext.moveTo(templatePoints[0][0], templatePoints[0][1]);
-            templatePoints.forEach(p => canvasContext.lineTo(p[0], p[1]));
+            canvasContext.moveTo(
+                templatePoints.x * w + 0.5 * w,
+                templatePoints.y * w + 0.5 * h);
+            templatePoints.forEach(p => canvasContext.lineTo(
+                p.x * w + 0.5 * w,
+                p.y * w + 0.5 * h));
             canvasContext.stroke();
         }
+        
+        return { x: -optimum.x, y: -optimum.y };
     }
     
-    function optimiseTemplateX(templateXs, templatePoints, pixels) {
+    function optimiseTemplate(templateScales, templateXs, templateYs, templatePoints, pixels, edges) {
+        var sMax = 0;
+        var xMax = 0;
+        var yMax = 0;
+        var maxTotalFitFactor = 0;
+        templateScales.forEach(function (s) {
+            templateXs.forEach(function (x) {
+                templateYs.forEach(function (y) {
+                    var meanFitFactor = getMeanFitFactor(s, x, y, templatePoints, pixels, edges);
+                    if (meanFitFactor > maxTotalFitFactor) {
+                        maxTotalFitFactor = meanFitFactor;
+                        sMax = s;
+                        xMax = x;
+                        yMax = y;
+                    }
+                });
+            });
+        });
+        return { s: sMax, x: xMax, y: yMax };
+    }
+        
+    function getMeanFitFactor(templateScale, templateX, templateY, templatePoints, pixels, edges) {
         var w = e58.webcam.canvasElement.width;
         var h = e58.webcam.canvasElement.height;
+        var s = templateScale;
+        var x = templateX;
+        var y = templateY;
         
-        var iMaxTotalFitFactor = 0;
-        var maxTotalFitFactor = 0;
-        templateXs.forEach(function (x, i) {
-            var totalFitFactor = 0;
-            templatePoints.forEach(p => totalFitFactor += getFitFactor([p[0] + x * 0.5 * w, p[1]], pixels));
-            if (totalFitFactor > maxTotalFitFactor) {
-                maxTotalFitFactor = totalFitFactor;
-                iMaxTotalFitFactor = i;
-            }
+        var totalFitFactor = 0;
+        templatePoints.forEach(function (p) {
+            totalFitFactor += getFitFactor(
+                { x: p.x * s + x, y: p.y * s + y },
+                pixels,
+                edges);
         });
-        
-        return templateXs[iMaxTotalFitFactor];
+        return totalFitFactor / templatePoints.length;
     }
     
-    function getFitFactor(templatePoint, pixels) {
+    function getFitFactor(templatePoint, pixels, edges) {
         var x, y, d;
+        var w = e58.webcam.canvasElement.width;
+        var h = e58.webcam.canvasElement.height;
         var windowRadius = 10;
         var wr = windowRadius;
-        var tp = templatePoint;
+        var tp = {
+            x:  Math.floor(templatePoint.x * w + 0.5 * w),
+            y:  Math.floor(templatePoint.y * w + 0.5 * h)
+        };
         
         var fitFactor = 0;
-        for (x = tp[0] - wr; x < tp[0] + wr; x++) {
-            for (y = tp[1] - wr; y < tp[1] + wr; y++) {
-                d = Math.sqrt((x - tp[0]) * (x - tp[0]) + (y - tp[1]) * (y - tp[1]));
+        edges
+            .filter(e => Math.abs(e.x - tp.x) <= wr && Math.abs(e.y - tp.y) <= wr)
+            .forEach(function (edge) {
+                d = Math.sqrt((edge.x - tp.x) * (edge.x - tp.x) + (edge.y - tp.y) * (edge.y - tp.y));
                 if (d <= wr) {
-                    fitFactor += (pixels[x][y] || 0) / (d || 1);
+                    fitFactor += ( /* edge.diff || */ 1) / (d || 1);
                 }
-            }
-        }
+            });
+        
         return fitFactor;
     }
     

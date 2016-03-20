@@ -29,6 +29,8 @@ window.addEventListener("load", function() {
             e58.vars.webcam.maximaEnabled = true;
             e58.vars.webcam.sectors.topCentre = true;
             e58.vars.webcam.sectors.bottomCentre = true;
+            g58.vars.webcam.viewCoordConstant *= 0.5;
+            g58.vars.webcam.aimCoordConstant *= 0.5;
             break;
         default:
             e58.vars.webcam.maximaEnabled = true;
@@ -40,7 +42,10 @@ window.addEventListener("load", function() {
     game.universe = e58.universe.getNew();
     game.camera = game.universe.addCamera([0, 0, 0], 0, 0, 0, game.canvas.getStandardZoom());
     game.cameraBlock = game.universe.addBlock([0, 0, 0], 0, 0, 0);
-    game.cameraBlock.velocityInOwnFrame.z = -g58.vars.ship.initialSpeed;
+    
+    if (g58.vars.options.move) {
+        game.cameraBlock.velocityInOwnFrame.z = -g58.vars.ship.initialSpeed;
+    }
     
     
     game.ship = g58.misc.addCube(
