@@ -1,5 +1,5 @@
 # asterboids
-Experimental 3D html5 cuboid asteroids demonstration with experimental webcam motion tracking.
+3D html5 cuboid asteroids demonstration with experimental webcam motion tracking.
 
 Try at http://steve58.github.io/asterboids
 
