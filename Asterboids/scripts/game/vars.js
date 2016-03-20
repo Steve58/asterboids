@@ -2,10 +2,10 @@
 
 g58.vars = {
     defaultOptions: {
-        cameraSplitMode: "viewCentreAimCentre",
+        cameraSplitMode: "fullView",
         flipCamera: "false",
-        ship: true,
-        move: true,
+        ship: false,
+        move: false,
         sound: false
     },
     
