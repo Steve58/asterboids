@@ -299,7 +299,12 @@ window.addEventListener("load", function() {
     }
 
     function _runWebcamFunction (nowUtcMs, msSinceLastWebcam) {
-        e58.webcam.refreshMaxima();
+        if (e58.vars.webcam.maximaEnabled) {
+            e58.webcam.refreshMaxima();
+        }
+        if (e58.vars.webcam.edgeTrackingEnabled) {
+            e58.webcam.refreshEdgeTracking();
+        }
         _lastWebcamUtcMs = nowUtcMs;
     }
 

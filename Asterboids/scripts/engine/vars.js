@@ -51,6 +51,8 @@ e58.vars = {
     },
 
     webcam: {
+        maximaEnabled: true,
+        edgeTrackingEnabled: false,
         width: 200,
         pollWhetherRunningMs: 100,
         maximaResolution: 20,

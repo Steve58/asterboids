@@ -30,7 +30,7 @@ g58.logic.updateLogic = function (controlParams) {
 };
 
 g58.logic.detectCollision = function () {
-    if (g58.game.ship.invulnerable) {
+    if (g58.game.ship.invulnerable || !g58.vars.options.ship) {
         return false;
     }
     

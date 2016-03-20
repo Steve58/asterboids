@@ -114,6 +114,11 @@ g58.control.handleControls = function (controlParams) {
         g58.game.controlProps.webcamWandBuffer.applyValue(aimWebcamMaximum.y, "y");        
     }
     
+    if (g58.vars.options.cameraSplitMode == "edgeTracking" && e58.webcam.edgeTrackingMean) {
+        g58.game.controlProps.webcamViewBuffer.applyValue(e58.webcam.edgeTrackingMean.x, "x");
+        g58.game.controlProps.webcamViewBuffer.applyValue(e58.webcam.edgeTrackingMean.y, "y");
+    }
+    
     if (controlParams.msSinceLastResumed > g58.vars.enablePauseDelayMs && touchParts.mid) {
         g58.game.canvas.touchStopControl();
     }

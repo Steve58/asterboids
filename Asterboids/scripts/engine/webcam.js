@@ -11,6 +11,13 @@ e58.webcam.initialise = function (videoElement, canvasElement) {
     e58.webcam.videoElement = videoElement;
     e58.webcam.canvasElement = canvasElement;
     e58.webcam.canvasContext = canvasElement.getContext('2d');
+    
+    e58.webcam.canvasContext.lineWidth = e58.vars.integerPixels ? 1: 0.5;
+    e58.webcam.canvasContext.strokeStyle = "#fff";
+    e58.webcam.canvasContext.fillStyle = "transparent";
+    e58.webcam.canvasContext.lineCap = "round";
+    e58.webcam.canvasContext.lineJoin = "round";
+        
     e58.webcam.maxima = [];
     e58.webcam.initialised = true;
 
@@ -87,6 +94,123 @@ e58.webcam.start = function () {
 };
 
 (function () {
+    // Attempt more advanced tracking
+    e58.webcam.refreshEdgeTracking = function () {
+        if (!e58.webcam.running || e58.webcam.processing) {
+            return;
+        }
+        e58.webcam.processing = true;
+
+        var videoElement = e58.webcam.videoElement;
+        var canvasElement = e58.webcam.canvasElement;
+        var canvasContext = e58.webcam.canvasContext;
+
+        canvasContext.drawImage(videoElement, 0, 0, videoElement.width, videoElement.height);
+
+        var rgbaData = canvasContext.getImageData(0, 0, canvasElement.width, canvasElement.height).data;
+
+        var i, x, y;
+        var pixels = [];
+        
+        for (i = 0; i <= rgbaData.length - 4; i += 4) {
+            x = (i / 4) % canvasElement.width;
+            y = Math.floor((i / 4) / canvasElement.width);
+
+            pixels[x] = pixels[x] || [];
+            
+            pixels[x][y] = {
+                r: rgbaData[i + 0],
+                b: rgbaData[i + 1],
+                g: rgbaData[i + 2],
+                a: rgbaData[i + 3],
+                t: rgbaData[i + 0] + rgbaData[i + 1] + rgbaData[i + 2]
+            };
+        }
+        
+        var edgeThreshold = 0.05 * 3 * 255;
+        var edgeHalfWidth = 5;
+        var edgeWidth = edgeHalfWidth * 2;
+                
+        var buffer, sumLeft, sumRight;
+        var edges = [];
+        for (x = 0; x < canvasElement.width; x++) {
+            buffer = [];
+            for (y = 0; y < canvasElement.height; y++) {
+                buffer.push(pixels[x][y].r);
+                if (buffer.length > edgeWidth) {
+                    buffer.shift(1);
+                }
+                if (buffer.length == edgeWidth) {
+                    sumLeft = 0;
+                    sumRight = 0;
+                    for (i = 0; i < buffer.length; i++) {
+                        if (i < edgeHalfWidth) {
+                            sumLeft += buffer[i];
+                        }
+                        else {
+                            sumRight += buffer[i];
+                        }
+                    }
+                    if (Math.abs(sumLeft - sumRight) > edgeThreshold * edgeHalfWidth) {
+                        edges.push({
+                            x: x,
+                            y: y - edgeHalfWidth,
+                            diff: Math.abs(sumLeft - sumRight)
+                        });
+                        // console.log(sumLeft + ", " + sumRight);
+                    }
+                }
+                // if (x == 10) {
+                    // console.log(buffer.length);
+                // }
+            }
+        }
+        
+        edges.sort(function (a, b) {
+            return a.diff < b.diff;
+        });
+        
+        // console.log(edges.length);
+        
+        var showEdges = 50; // edges.length;
+        e58.webcam.canvasContext.strokeStyle = s58.rgba(255, 0.5);
+        canvasContext.beginPath();
+        edges.slice(0, showEdges).forEach(function (edge, i) {
+            // canvasContext.beginPath();
+            // e58.webcam.canvasContext.strokeStyle = s58.rgba(255, 1 - (i / edges.length));
+            // canvasContext.arc(edge.x, edge.y, 1, 0, s58.TWOPI);
+            // canvasContext.stroke();
+            canvasContext.moveTo(edge.x - 1, edge.y);
+            canvasContext.lineTo(edge.x + 1, edge.y);
+        });
+        canvasContext.stroke();
+                
+        var maxEdges = showEdges;
+        var edgeSumX = 0;
+        var edgeSumY = 0;
+        edges.slice(0, maxEdges).forEach(function (edge, i) {
+            edgeSumX += edge.x;
+            edgeSumY += edge.y;
+        });
+        
+        var rawEdgeMean = {
+            x: Math.floor(edgeSumX / maxEdges),
+            y: Math.floor(edgeSumY / maxEdges)
+        };
+        
+        e58.webcam.edgeTrackingMean = {
+            x: s58.getOrientCoordX(
+                2 * (canvasElement.width / 2 - rawEdgeMean.x) / canvasElement.width,
+                2 * (canvasElement.height / 2 - rawEdgeMean.y) / canvasElement.width),
+            y: s58.getOrientCoordY(
+                2 * (canvasElement.height / 2 - rawEdgeMean.y) / canvasElement.width,
+                2 * (canvasElement.width / 2 - rawEdgeMean.x) / canvasElement.width),
+        };
+        
+        e58.webcam.processing = false;
+    };    
+    
+    // Original maxima tracking routine for torches
     e58.webcam.refreshMaxima = function () {
         if (!e58.webcam.running || e58.webcam.processing) {
             return;
