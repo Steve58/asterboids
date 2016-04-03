@@ -16,13 +16,19 @@ window.addEventListener("load", function() {
     e58.vars.sound.enable = queryOptions.sound;
     e58.vars.integerPixels = !queryOptions.antiAliasing;
     
+    for (propName in g58.vars.defaultOptions) {
+        if (g58.vars.options[propName] == null) {
+            g58.vars.options[propName] = g58.vars.defaultOptions[propName];
+        }
+    }
+    
     for (propName in e58.vars.webcam.sectors) {
         e58.vars.webcam.sectors[propName] = false;
     }
 
     e58.vars.webcam.maximaEnabled = false;
     e58.vars.webcam.edgeTrackingEnabled = false;
-    switch (queryOptions.cameraSplitMode) {
+    switch (g58.vars.options.cameraSplitMode) {
         case "edgeTracking":
             e58.vars.webcam.edgeTrackingEnabled = true;
         case "viewCentreAimCentre":
